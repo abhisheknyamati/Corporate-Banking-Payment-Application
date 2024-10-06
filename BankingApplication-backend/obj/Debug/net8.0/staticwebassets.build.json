@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "9glhT+rHkgV7EnWT1GSQDcO6WN3LX0zCmsCROr/aBLI=",
+  "Source": "BankingApplication-backend",
+  "BasePath": "_content/BankingApplication-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
