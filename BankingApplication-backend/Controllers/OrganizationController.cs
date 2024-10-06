@@ -1,6 +1,7 @@
 ﻿using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using BankingApplication_backend.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,14 @@ namespace BankingApplication_backend.Controllers
         private readonly ISalaryService _salaryService;
         private readonly IOrgService _organizationService;
         private readonly IEmpService _empService;
+        private readonly IInboundService _inboundService;
 
-        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService)
+        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService, IInboundService inboundService)
         {
             _salaryService = salaryService;
             _organizationService = organizationService;
             _empService = empService;
+            _inboundService = inboundService;
         }
 
         [HttpGet("{id}")]
@@ -83,7 +86,8 @@ namespace BankingApplication_backend.Controllers
         [HttpGet("user/outbounds/{addedById}")]
         public async Task<IActionResult> GetOutboundsByAddedBy(int addedById)
         {
-            var outbounds = await _organizationService.GetOutboundsByAddedBy(addedById); if (outbounds == null || !outbounds.Any())
+            int orgId = _organizationService.UserIdToOrganisationId(addedById);
+            var outbounds = await _organizationService.GetOutboundsByAddedBy(orgId); if (outbounds == null || !outbounds.Any())
             {
                 return NotFound("No outbounds found for the given user.");
             }
@@ -92,13 +96,27 @@ namespace BankingApplication_backend.Controllers
 
 
         [HttpPost("user/outbounds")]
-        public async Task<IActionResult> AddOutbound([FromBody] Outbound outbound)
+        public async Task<IActionResult> AddOutbound([FromBody] OutboundDto outboundDto)
         {
-            if (outbound == null)
+            if (outboundDto == null)
             {
                 return BadRequest("Invalid data.");
             }
+            int orgId = _organizationService.UserIdToOrganisationId(outboundDto.AddedBy);
+            // Map DTO to Outbound model
+            var outbound = new Outbound
+            {
+                OrganisationName = outboundDto.OrganisationName,
+                FounderName = outboundDto.FounderName,
+                OrganisationEmail = outboundDto.OrganisationEmail,
+                IsApproved = "pending",
+                AccountNumber = outboundDto.AccountNumber,
+                IFSC = outboundDto.IFSC,
+                AddedBy = orgId
+            };
+
             await _organizationService.AddOutbound(outbound);
+
             return CreatedAtAction(nameof(GetOutboundsByAddedBy), new { addedById = outbound.AddedBy }, outbound);
         }
 
@@ -106,6 +124,39 @@ namespace BankingApplication_backend.Controllers
         private async Task<bool> CanExecuteTransaction(int orgId, decimal transactionAmount)
         {
             return await _organizationService.CanExecuteTransaction(orgId, transactionAmount);
+        }
+
+        [HttpPost("beneficiary-transaction")]
+        public async Task<IActionResult> CreateBeneficiaryTransaction([FromBody] BeneficiaryTransactionRequestDto requestDto)
+        {
+            if (requestDto == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            // Validate that at least one of InboundId or OutboundId is provided
+            if (requestDto.InboundId == null && requestDto.OutboundId == null)
+            {
+                return BadRequest("Either InboundId or OutboundId must be provided.");
+            }
+
+            // Call the service to add the transaction
+            await _organizationService.AddBeneficiaryTransaction(requestDto);
+
+            // Respond with a simple success message
+            return Ok(new { message = "Request sent successfully." });
+        }
+        [HttpGet("employee-transactions")]
+        public async Task<IActionResult> GetEmployeeTransactions([FromQuery] EmployeeTransactionFilterDto filter)
+        {
+            var transactions = await _organizationService.GetEmployeeTransactionsByOrgIdAsync(filter);
+
+            if (transactions == null || !transactions.Any())
+            {
+                return NotFound("No transactions found for the specified criteria.");
+            }
+
+            return Ok(transactions);
         }
 
     }

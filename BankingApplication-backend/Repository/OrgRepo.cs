@@ -1,4 +1,5 @@
 ﻿using BankingApplication_backend.Data;
+using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,30 @@ namespace BankingApplication_backend.Repository
         {
             _context = context;
         }
+        public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
+        {
+            var query = _context.EmpTransactions.AsQueryable();
 
+            // Filter by OrgId
+            query = query.Where(e => e.OrgID == filter.OrgId);
+
+            // Filter by date range if provided
+            if (filter.StartDate.HasValue)
+            {
+                query = query.Where(e => e.EmployeeTransactionDate >= filter.StartDate.Value);
+            }
+
+            if (filter.EndDate.HasValue)
+            {
+                query = query.Where(e => e.EmployeeTransactionDate <= filter.EndDate.Value);
+            }
+
+            // Apply pagination
+            return await query
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .ToListAsync();
+        }
         public async Task<Organisation> AddOrganisation(Organisation organisation)
         {
             var bank = await _context.Banks.FirstOrDefaultAsync(b => b.BankName == organisation.BankName);
@@ -104,6 +128,11 @@ namespace BankingApplication_backend.Repository
         public async Task<Organisation> GetOrganisationWithAccountAsync(int orgId)
         {
             return await _context.Organisations.Include(o => o.Account).FirstOrDefaultAsync(o => o.OrganisationId == orgId);
+        }
+        public async Task AddBeneficiaryTransaction(BeneficiaryTransaction transaction)
+        {
+            await _context.BeneficiaryTransactions.AddAsync(transaction);
+            await _context.SaveChangesAsync();
         }
     }
 }

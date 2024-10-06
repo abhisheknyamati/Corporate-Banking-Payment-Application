@@ -43,25 +43,21 @@ namespace BankingApplication_backend.Services
         public async Task<bool> ApproveBeneficiaryTransaction(int transactionId)
         {
             var transaction = await _clientTransactionRepo.GetTransactionById(transactionId);
-            if (transaction != null && string.IsNullOrEmpty(transaction.IsApproved))
-            {
-                transaction.IsApproved = "Approved"; // Or use an enum for better management
+            //write logic here to - transaction amount from intiator
+                transaction.IsApproved = "approved"; 
                 return await _clientTransactionRepo.UpdateTransaction(transaction);
-            }
 
-            return false;
+
+    
         }
 
         public async Task<bool> RejectBeneficiaryTransaction(int transactionId)
         {
             var transaction = await _clientTransactionRepo.GetTransactionById(transactionId);
-            if (transaction != null && string.IsNullOrEmpty(transaction.IsApproved))
-            {
-                transaction.IsApproved = "Rejected"; // Or use an enum for better management
+           
+                transaction.IsApproved = "rejected"; 
                 return await _clientTransactionRepo.UpdateTransaction(transaction);
-            }
-
-            return false;
+        
         }
 
         public async Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactions(int organizationId, string status)

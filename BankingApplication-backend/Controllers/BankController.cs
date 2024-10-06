@@ -1,4 +1,5 @@
-﻿using BankingApplication_backend.Services;
+﻿using BankingApplication_backend.Models;
+using BankingApplication_backend.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,14 @@ namespace BankingApplication_backend.Controllers
         private readonly IBankService _bankService;
         private readonly IClientTransactionService _clientTransactionService;
         private readonly IEmpTransactionService _empTransactionService;
-        public BankController(IBankService bankService, IClientTransactionService clientTransactionService, IEmpTransactionService empTransactionService)
+        private readonly IOrgService _orgService;
+        
+        public BankController(IBankService bankService, IClientTransactionService clientTransactionService, IEmpTransactionService empTransactionService, IOrgService orgService)
         {
             _bankService = bankService;
             _clientTransactionService = clientTransactionService;
             _empTransactionService = empTransactionService;
+            _orgService = orgService;
         }
 
 
@@ -59,6 +63,18 @@ namespace BankingApplication_backend.Controllers
             }
             return Ok(salaryDisbursements);
         }
-        // getorg by user id pending
+        [HttpGet("organisationsbyUserId/{userId}")]
+        public async Task<IActionResult> GetOrganisationsByBankId(int userId)
+        {
+            int bankId = _bankService.userIdToBankId(userId);
+            var organisations = await _orgService.GetOrganisationsByBankId(bankId);
+
+            if (organisations == null || !organisations.Any())
+            {
+                return NotFound($"No organizations found for Bank ID {bankId}.");
+            }
+
+            return Ok(organisations);
+        }
     }
 }

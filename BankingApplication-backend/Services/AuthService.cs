@@ -55,6 +55,7 @@ namespace BankingApplication_backend.Services
         private async Task<Claim[]> GenerateClaims(IUser user)
         {
             var role = await fetchRole(user);
+         
 
             return new[]
             {
@@ -62,6 +63,7 @@ namespace BankingApplication_backend.Services
                 new Claim("Name", user.Name),
                 new Claim("Email", user.Email),
                 new Claim("role", role),
+                
             };
         }
 

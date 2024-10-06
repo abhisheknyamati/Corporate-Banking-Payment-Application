@@ -101,7 +101,7 @@ namespace BankingApplication_backend.Repository
         {
             if (employee == null) return new BadRequestObjectResult("Invalid employee data.");
 
-            var organisation = _context.Organisations.FindAsync(employee.OrganisationId);
+            var organisation = await _context.Organisations.FindAsync(employee.OrganisationId);
             if (organisation == null) return new NotFoundObjectResult("Organisation not found.");
             employee.IsActive = true;
 
@@ -147,7 +147,7 @@ namespace BankingApplication_backend.Repository
 
         public async Task<IActionResult> SendSalaryRequest(SalaryRequestDto requestDto)
         {
-            Organisation org = await _context.Organisations.FirstOrDefaultAsync(o => o.UserId == requestDto.OrgID);
+            Organisation org = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganisationId == requestDto.OrgID);
 
             if (requestDto.EmployeeIds == null || !requestDto.EmployeeIds.Any())
             {
@@ -180,7 +180,9 @@ namespace BankingApplication_backend.Repository
                         IFSC = employee.IFSC,
                         Amount = employee.EmployeeSalary,
                         OrgID = org.OrganisationId,
-                        EmployeeId = empId
+                        EmployeeId = empId,
+                        EmployeeTransactionDate = DateTime.Now
+                        
                     };
 
                     _context.EmpTransactions.Add(transaction);

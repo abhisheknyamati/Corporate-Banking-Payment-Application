@@ -19,6 +19,6 @@ namespace BankingApplication_backend.Models
         public int OrgID { get; set; }
         [ValidateNever]
         public virtual Organisation Organisation { get; set; }
-        public DateOnly EmployeeTransactionDate { get; set; }
+        public DateTime EmployeeTransactionDate { get; set; }
     }
 }

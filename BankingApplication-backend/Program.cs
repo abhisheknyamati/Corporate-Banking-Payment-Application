@@ -13,8 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BankingAppDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("database2")));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("database")));
+builder.Services.AddScoped<ISalaryService, SalaryService>();
+builder.Services.AddScoped<IInboundService, InboundService>();
+builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 builder.Services.AddScoped<IAdminService, AdminService>();//
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();//
 builder.Services.AddScoped<IOrgService, OrgService>();//

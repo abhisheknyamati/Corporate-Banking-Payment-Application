@@ -16,14 +16,14 @@ namespace BankingApplication_backend.Repository
         public async Task<IEnumerable<BeneficiaryTransaction>> GetPendingTransactions()
         {
             return await _context.BeneficiaryTransactions
-                .Where(t => string.IsNullOrEmpty(t.IsApproved)) // Assuming null or empty means pending
+                .Where(t=>t.IsApproved=="pending") 
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<BeneficiaryTransaction>> GetApprovedTransactions()
         {
             return await _context.BeneficiaryTransactions
-                .Where(t => t.IsApproved == "Approved") // Adjust based on your approval logic
+                .Where(t => t.IsApproved == "approved")
                 .ToListAsync();
         }
 
@@ -69,7 +69,7 @@ namespace BankingApplication_backend.Repository
         public async Task<bool> UpdateTransaction(BeneficiaryTransaction transaction)
         {
             _context.BeneficiaryTransactions.Update(transaction);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync()>0;
         }
 
         public async Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactions(int organizationId, string status)

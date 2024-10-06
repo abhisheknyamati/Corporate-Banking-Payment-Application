@@ -22,9 +22,11 @@ namespace BankingApplication_backend.Controllers
         private readonly IEmpTransactionService _empTransactionService;
         private readonly ISalaryService _salaryService;
         private readonly IClientTransactionService _clientTransactionService;
+        private readonly IInboundService _inboundService;
+
         public AdminController(IAdminService adminService, IBankService bankService, IOrgService organisationService,
             IEmpTransactionService service, IMailService mailService, IEmpService empService, IEmpTransactionService empTransactionService,
-            ISalaryService salaryService, IClientTransactionService clientTransactionService)
+            ISalaryService salaryService, IClientTransactionService clientTransactionService,IInboundService inboundService)
         {
             _adminService = adminService;
             _bankService = bankService;
@@ -35,6 +37,7 @@ namespace BankingApplication_backend.Controllers
             _empTransactionService = empTransactionService;
             _salaryService = salaryService;
             _clientTransactionService = clientTransactionService;
+            _inboundService = inboundService;
         }
 
         [HttpGet("pending-org")]
@@ -82,16 +85,34 @@ namespace BankingApplication_backend.Controllers
         [HttpPut("approve-org/{id}")]
         public async Task<IActionResult> ApproveOrganisation(int id)
         {
+            // Retrieve the organization by ID
             var organisation = await _organisationService.GetOrganisationById(id);
             if (organisation == null)
             {
                 return NotFound();
             }
 
+            // Update the organization status to approved
             organisation.IsApproved = "approved";
             await _organisationService.UpdateOrganisation(organisation);
-            var emailSubject = $"Orgnaisation Request ";
-            var emailBody = $"The Orgnaisation request has been {organisation.IsApproved} for your Orgnaisation {organisation.OrganisationName} .\n\n";
+
+            // Create a new Inbound object based on the approved organization
+            var inbound = new Inbound
+            {
+                InboundName = organisation.OrganisationName,
+                InboundFounderName = organisation.FounderName,
+                InboundEmail = organisation.OrganisationEmail,
+                IsApproved = "approved",
+                AccountId = organisation.AccountId, // Assuming AccountId is set in the organization
+                InboundBankId = organisation.BankId // Assuming BankId is part of the organization model
+            };
+
+            // Save the new inbound entity to the database
+            await _inboundService.AddInbound(inbound); // Ensure you have a method in your service to handle this
+
+            // Prepare and send email notification
+            var emailSubject = $"Organisation Request Approved";
+            var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
             var mailData = new MailData
             {
                 EmailTo = organisation.OrganisationEmail,
@@ -100,7 +121,8 @@ namespace BankingApplication_backend.Controllers
             };
 
             _mailService.SendMail(mailData);
-            return NoContent();
+
+            return NoContent(); // Return 204 No Content on success
         }
 
         [HttpPut("reject-org/{id}")]

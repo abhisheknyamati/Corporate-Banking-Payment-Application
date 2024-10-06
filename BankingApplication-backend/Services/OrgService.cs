@@ -1,5 +1,7 @@
-﻿using BankingApplication_backend.Models;
+﻿using BankingApplication_backend.DTOs;
+using BankingApplication_backend.Models;
 using BankingApplication_backend.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankingApplication_backend.Services
 {
@@ -9,6 +11,10 @@ namespace BankingApplication_backend.Services
         public OrgService(IOrgRepo orgRepo)
         {
             _orgRepo = orgRepo;
+        }
+        public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
+        {
+            return await _orgRepo.GetEmployeeTransactionsByOrgIdAsync(filter);
         }
         public async Task<Organisation> AddOrganisation(Organisation organisation)
         {
@@ -36,7 +42,7 @@ namespace BankingApplication_backend.Services
 
         public int UserIdToOrganisationId(int userId)
         {
-            var organisation =  _orgRepo.UserIdToOrganisationId(userId);
+            Organisation organisation =  _orgRepo.UserIdToOrganisationId(userId);
             return organisation.OrganisationId;
         }
 
@@ -50,6 +56,26 @@ namespace BankingApplication_backend.Services
             var organisation = await _orgRepo.GetOrganisationWithAccountAsync(orgId);
             if (organisation == null || organisation.Account == null) { return false; }
             return (organisation.Account.AccountBalance - transactionAmount) >= 100000;
+        }
+        public Task AddBeneficiaryTransaction(BeneficiaryTransactionRequestDto requestDto)
+        {
+            int? inboundId = requestDto.InboundId == 0 ? (int?)null : requestDto.InboundId;
+            int? outboundId = requestDto.OutboundId == 0 ? (int?)null : requestDto.OutboundId;
+
+            int orgId = UserIdToOrganisationId(requestDto.InitiatorOrgId);
+
+            var transaction = new BeneficiaryTransaction
+            {
+                InitiatorOrgId = orgId,
+                InboundId = inboundId,
+                OutboundId = outboundId,
+                Amount = requestDto.Amount,
+                BeneficiaryTransactionDate = DateTime.Now,
+                IsApproved="pending"
+            };
+            
+
+           return _orgRepo.AddBeneficiaryTransaction(transaction);
         }
 
     }

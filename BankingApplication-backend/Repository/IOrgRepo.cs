@@ -1,4 +1,5 @@
-﻿using BankingApplication_backend.Models;
+﻿using BankingApplication_backend.DTOs;
+using BankingApplication_backend.Models;
 
 namespace BankingApplication_backend.Repository
 {
@@ -13,5 +14,9 @@ namespace BankingApplication_backend.Repository
         Task AddOutbound(Outbound outbound);
         Task<Organisation> GetOrganisationWithAccountAsync(int orgId);
         Task<Organisation> AddOrganisation(Organisation organisation);
-    }
+        Task AddBeneficiaryTransaction(BeneficiaryTransaction transaction);
+        Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter);
+    
+
+}
 }

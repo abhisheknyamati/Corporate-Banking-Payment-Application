@@ -4540,11 +4540,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\abhishek.nyamati\\Desktop\\cleanCode\\BankingApplication-backend\\BankingApplication-backend.csproj",
+      "projectUniqueName": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\BankingApplication-backend.csproj",
       "projectName": "BankingApplication-backend",
-      "projectPath": "C:\\Users\\abhishek.nyamati\\Desktop\\cleanCode\\BankingApplication-backend\\BankingApplication-backend.csproj",
+      "projectPath": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\BankingApplication-backend.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\abhishek.nyamati\\Desktop\\cleanCode\\BankingApplication-backend\\obj\\",
+      "outputPath": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
