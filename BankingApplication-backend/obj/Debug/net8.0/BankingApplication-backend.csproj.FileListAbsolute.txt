@@ -285,3 +285,5 @@ C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-
 C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-backend\obj\Debug\net8.0\BankingApplication-backend.pdb
 C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-backend\obj\Debug\net8.0\BankingApplication-backend.genruntimeconfig.cache
 C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-backend\obj\Debug\net8.0\ref\BankingApplication-backend.dll
+C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-backend\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\sanskruti.itkar\Desktop\final banking app\cleanCode\BankingApplication-backend\bin\Debug\net8.0\Newtonsoft.Json.dll

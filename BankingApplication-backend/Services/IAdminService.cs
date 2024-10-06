@@ -8,5 +8,6 @@ namespace BankingApplication_backend.Services
         Task<IEnumerable<Organisation>> GetPendingOrganisation();
         Task<Admin> CreateAdmin(AdminDto adminDto);
         Task<IEnumerable<Bank>> GetPendingBank();
+        Task<bool> UserExists(string userId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using BankingApplication_backend.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankingApplication_backend.Services
 {
@@ -32,6 +33,10 @@ namespace BankingApplication_backend.Services
                 throw new ArgumentNullException(nameof(adminDto), "Invalid data.");
             }
             return await _adminRepo.AddAdmin(adminDto);
+        }
+        public async Task<bool> UserExists(string userId)
+        {
+            return await _adminRepo.UserExists(userId);
         }
     }
 }

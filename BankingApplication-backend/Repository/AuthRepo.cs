@@ -2,6 +2,7 @@
 using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
 
 namespace BankingApplication_backend.Repository
 {
@@ -19,10 +20,10 @@ namespace BankingApplication_backend.Repository
         public string GetRoleName(CredDto value)
         {
             string roleName = (from cred in _context.Credentials
-                        join User in _context.Users on cred.UserId equals User.UserId
-                        join role in _context.Roles on User.RoleId equals role.RoleId
-                        where cred.Username == value.UserName && cred.Password == value.Password
-                        select role.RoleName).FirstOrDefault();
+                               join User in _context.Users on cred.UserId equals User.UserId
+                               join role in _context.Roles on User.RoleId equals role.RoleId
+                               where cred.Username == value.UserName && cred.Password == value.Password
+                               select role.RoleName).FirstOrDefault();
 
             return roleName;
         }
@@ -66,17 +67,17 @@ namespace BankingApplication_backend.Repository
         }
         public string GetKey()
         {
-            return _configuration["Key"];
+            return _configuration["Jwt:Key"];
         }
         public string GetAudience()
         {
-            return _configuration["Audience"];
+            return _configuration["Jwt:Audience"];
         }
 
         public async Task<string> GetUserRole(int userId)
         {
             var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.UserId == userId);
-            return user?.Role?.RoleName ?? "User"; 
+            return user?.Role?.RoleName ?? "User";
         }
 
         private bool VerifyPassword(string inputPassword, string storedPassword)
@@ -92,5 +93,20 @@ namespace BankingApplication_backend.Repository
             //}
             return inputPassword.Equals(storedPassword);
         }
+
+        public async Task<string> GetBankStatus(int userId)
+        {
+            var bank = await _context.Banks.FirstOrDefaultAsync(b => b.UserId == userId);
+            return bank?.IsApproved;
+        }
+
+        public async Task<string> GetOrganisationStatus(int userId)
+        {
+            var organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.UserId == userId);
+            return organisation?.IsApproved;
+        }
+
     }
+
+ 
 }

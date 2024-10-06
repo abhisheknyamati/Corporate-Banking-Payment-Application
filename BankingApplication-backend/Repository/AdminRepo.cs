@@ -1,6 +1,7 @@
 ﻿using BankingApplication_backend.Data;
 using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankingApplication_backend.Repository
 {
@@ -35,7 +36,10 @@ namespace BankingApplication_backend.Repository
             await _context.SaveChangesAsync();
             return admin;
         }
-
+        public async Task<bool> UserExists(string email)
+        {
+            return await _context.Credentials.AnyAsync(u => u.Username == email);
+        }
 
     }
 

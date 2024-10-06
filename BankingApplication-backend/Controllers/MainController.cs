@@ -1,8 +1,12 @@
 ﻿using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using BankingApplication_backend.Services;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
+using System.Net;
 
 namespace BankingApplication_backend.Controllers
 {
@@ -14,13 +18,15 @@ namespace BankingApplication_backend.Controllers
         private readonly IBankService _bankService;
         private readonly IOrgService _orgService;
         private readonly IDocumentService _documentService;
+        private readonly Cloudinary _cloudinary;
 
-        public MainController(IAdminService adminService, IBankService bankService, IOrgService orgService, IDocumentService documentService)
+        public MainController(IAdminService adminService, IBankService bankService, IOrgService orgService, IDocumentService documentService,Cloudinary cloudinary)
         {
             _adminService = adminService;
             _bankService = bankService;
             _orgService = orgService;
             _documentService = documentService;
+            _cloudinary = cloudinary;
         }
 
         [HttpPost("Admin")]
@@ -54,7 +60,7 @@ namespace BankingApplication_backend.Controllers
                 OrganisationEmail = organisationDto.OrganisationEmail,
                 OrganisationPassword = organisationDto.OrganisationPassword,
                 BankName = organisationDto.BankName,
-                Account = new Account
+                Account = new Models.Account
                 {
                     AccountNumber = organisationDto.Account.AccountNumber,
                     IFSC = organisationDto.Account.IFSC,
@@ -62,55 +68,59 @@ namespace BankingApplication_backend.Controllers
                 },
             };
 
-            //var beneficiary = new Beneficiary
-            //{
-            //    BeneficiaryId = organisationDto.OrganisationId,
-            //    BeneficiaryName = organisationDto.OrganisationName,
-            //    BeneficiaryEmail = organisationDto.OrganisationEmail,
-            //    OrganisationId = null,
-            //    Account = new Account
-            //    {
-            //        AccountNumber = organisationDto.Account.AccountNumber,
-            //        IFSC = organisationDto.Account.IFSC,
-            //        AccountBalance = organisationDto.Account.AccountBalance
-            //    },
-
-            //};
-
-            //await _benificiaryService.AddBeneficiary(beneficiary);
-
             var createdOrganisation = await _orgService.AddOrganisation(organisation);
 
             if (file != null && file.Length > 0)
             {
-                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-                if (!Directory.Exists(uploadPath))
+                // Validate file type and size if necessary
+                var validExtensions = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".pdf" };
+                var extension = Path.GetExtension(file.FileName).ToLower();
+
+                if (!validExtensions.Contains(extension))
                 {
-                    Directory.CreateDirectory(uploadPath);
+                    return BadRequest("Invalid file extension.");
                 }
 
-                var fileName = Path.GetFileName(file.FileName);
-                var fullPath = Path.Combine(uploadPath, fileName);
-
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                // Validate file size (max 5MB)
+                long size = file.Length;
+                if (size > (5 * 1024 * 1024))
                 {
-                    await file.CopyToAsync(stream);
+                    return BadRequest("File size exceeds the 5MB limit.");
                 }
 
-                var document = new Document
+                using (var stream = file.OpenReadStream())
                 {
-                    FileName = fileName,
-                    FilePath = fullPath,
-                    FileType = file.ContentType,
-                    OrganisationId = createdOrganisation.OrganisationId
-                };
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.FileName, stream),
+                        PublicId = $"organization/{createdOrganisation.OrganisationId}/{file.FileName}", // Specify folder structure
+                        Overwrite = true // Optional: Overwrite if exists
+                    };
 
+                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-                await _documentService.AddDocumentAsync(document);
+                    if (uploadResult.StatusCode == HttpStatusCode.OK)
+                    {
+                        var document = new Document
+                        {
+                            FileName = file.FileName,
+                            FilePath = uploadResult.SecureUrl.ToString(), // Use the secure URL from Cloudinary
+                            FileType = file.ContentType,
+                            OrganisationId = createdOrganisation.OrganisationId
+                        };
+
+                        await _documentService.AddDocumentAsync(document);
+                    }
+                    else
+                    {
+                        return StatusCode((int)uploadResult.StatusCode, "Error uploading file to Cloudinary.");
+                    }
+                }
             }
 
             return CreatedAtAction(nameof(GetOrganization), new { id = createdOrganisation.OrganisationId }, createdOrganisation);
         }
+
 
         [HttpPost("Bank")]
         public async Task<IActionResult> PostBank([FromForm] BankDto bankDto, IFormFile file)
@@ -135,38 +145,69 @@ namespace BankingApplication_backend.Controllers
 
             if (file != null && file.Length > 0)
             {
-                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-                if (!Directory.Exists(uploadPath))
+                var validExtensions = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".pdf" };
+                var extension = Path.GetExtension(file.FileName).ToLower();
+
+                if (!validExtensions.Contains(extension))
                 {
-                    Directory.CreateDirectory(uploadPath);
+                    return BadRequest("Invalid file extension.");
                 }
 
-                var fileName = Path.GetFileName(file.FileName);
-                var fullPath = Path.Combine(uploadPath, fileName);
-
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                if (file.Length > (5 * 1024 * 1024))
                 {
-                    await file.CopyToAsync(stream);
+                    return BadRequest("File size exceeds the 5MB limit.");
                 }
 
-                var document = new Document
+                try
                 {
-                    FileName = fileName,
-                    FilePath = fullPath,
-                    FileType = file.ContentType,
-                    BankId = createdBank.BankId,
-                };
+                    using (var stream = file.OpenReadStream())
+                    {
+                        var publicId = $"bank/{createdBank.BankId}/{Guid.NewGuid()}_{Path.GetFileNameWithoutExtension(file.FileName)}";
+                        var uploadParams = extension == ".pdf"
+                            ? new RawUploadParams
+                            {
+                                File = new FileDescription(file.FileName, stream),
+                                PublicId = publicId,
+                                Overwrite = true
+                            }
+                            : new ImageUploadParams
+                            {
+                                File = new FileDescription(file.FileName, stream),
+                                PublicId = publicId,
+                                Overwrite = true
+                            };
 
-                if (string.IsNullOrEmpty(document.FileName) || string.IsNullOrEmpty(document.FilePath) || string.IsNullOrEmpty(document.FileType))
-                {
-                    return BadRequest("Document details are incomplete.");
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                        if (uploadResult.StatusCode == HttpStatusCode.OK)
+                        {
+                            var document = new Document
+                            {
+                                FileName = file.FileName,
+                                FilePath = uploadResult.SecureUrl.ToString(),
+                                FileType = file.ContentType,
+                                BankId = createdBank.BankId,
+                            };
+
+                            await _documentService.AddDocumentAsync(document);
+                        }
+                        else
+                        {
+                            return StatusCode((int)uploadResult.StatusCode, "Error uploading file to Cloudinary.");
+                        }
+                    }
                 }
-
-                await _documentService.AddDocumentAsync(document);
+                catch (Exception ex)
+                {
+                    // Log the error
+                    return StatusCode(500, $"An error occurred while uploading the file: {ex.Message}");
+                }
             }
 
             return CreatedAtAction(nameof(GetBank), new { id = createdBank.BankId }, createdBank);
         }
+
+        
 
         [HttpGet("Bank/{id}")]
         public async Task<IActionResult> GetBank(int id)
@@ -189,6 +230,12 @@ namespace BankingApplication_backend.Controllers
                 return NotFound();
             }
             return Ok(organization);
+        }
+        [HttpGet("check-username/{email}")]
+        public async Task<IActionResult> CheckUsername(string email)
+        {
+            var exists = await _adminService.UserExists(email); // Implement this method in your service
+            return Ok(new { exists });
         }
 
     }

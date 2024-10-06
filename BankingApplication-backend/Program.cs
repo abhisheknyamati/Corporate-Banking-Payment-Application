@@ -6,9 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using CloudinaryDotNet;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
+var account = new Account(
+    "dtdcdlkf9", // Replace with your cloud_name
+    "616397431425944", // Replace with your api_key
+    "DMilBZ6uBXR_2hNZcm35n0OVNL0" // Replace with your api_secret
+);
+Cloudinary cloudinary = new Cloudinary(account);
+builder.Services.AddSingleton(cloudinary);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,7 +35,7 @@ builder.Services.AddScoped<IDocumentRepo, DocumentRepo>();//
 builder.Services.AddScoped<IDocumentService, DocumentService>();//
 builder.Services.AddScoped<IEmpTransactionRepository, EmpTransactionRepository>();//
 builder.Services.AddScoped<IEmpTransactionService, EmpTransactionService>();//
-builder.Services.AddScoped<AuthService>();//
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<AuthRepo>();//
 builder.Services.AddScoped<IMailService, MailService>();//
 builder.Services.AddScoped<IEmpRepo, EmpRepo>();//

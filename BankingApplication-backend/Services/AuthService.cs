@@ -10,7 +10,8 @@ using System.Text;
 
 namespace BankingApplication_backend.Services
 {
-    public class AuthService 
+
+    public class AuthService
     {
         private readonly AuthRepo _repo;
         public AuthService(AuthRepo repo)
@@ -55,16 +56,29 @@ namespace BankingApplication_backend.Services
         private async Task<Claim[]> GenerateClaims(IUser user)
         {
             var role = await fetchRole(user);
-         
+            var status = string.Empty;
+
+            if (role == "bank")
+            {
+                status = await fetchBankStatus(user.UserId);
+            }
+            else if (role == "org")
+            {
+                status = await fetchOrgStatus(user.UserId);
+            }
+            else if (role == "admin")
+            {
+                status = "High Status";
+            }
 
             return new[]
             {
-                new Claim("UserID", user.UserId.ToString()),
-                new Claim("Name", user.Name),
-                new Claim("Email", user.Email),
-                new Claim("role", role),
-                
-            };
+            new Claim("UserID", user.UserId.ToString()),
+            new Claim("Name", user.Name),
+            new Claim("Email", user.Email),
+            new Claim("role", role),
+            new Claim("status", status),
+        };
         }
 
         private string GenerateToken(Claim[] claims)
@@ -90,5 +104,18 @@ namespace BankingApplication_backend.Services
             return role;
         }
 
+        private async Task<string> fetchBankStatus(int userId)
+        {
+            var bankStatus = await _repo.GetBankStatus(userId);
+            return bankStatus;
+        }
+
+        private async Task<string> fetchOrgStatus(int userId)
+        {
+            var orgStatus = await _repo.GetOrganisationStatus(userId);
+            return orgStatus;
+        }
+
     }
+
 }

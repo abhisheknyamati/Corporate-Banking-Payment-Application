@@ -6,5 +6,6 @@ namespace BankingApplication_backend.Repository
     public interface IAdminRepo
     {
         Task<Admin> AddAdmin(AdminDto adminDto);
+        Task<bool> UserExists(string userId);
     }
 }
