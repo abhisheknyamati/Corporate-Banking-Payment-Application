@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BankingApplication_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class migrate : Migration
+    public partial class newMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,21 @@ namespace BankingApplication_backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.AccountId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Downloads",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Downloads", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -307,7 +322,7 @@ namespace BankingApplication_backend.Migrations
                     IFSC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     OrgID = table.Column<int>(type: "int", nullable: false),
-                    EmployeeTransactionDate = table.Column<DateOnly>(type: "date", nullable: false)
+                    EmployeeTransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -355,14 +370,12 @@ namespace BankingApplication_backend.Migrations
                 name: "IX_BeneficiaryTransactions_InboundId",
                 table: "BeneficiaryTransactions",
                 column: "InboundId",
-                unique: true,
                 filter: "[InboundId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BeneficiaryTransactions_OutboundId",
                 table: "BeneficiaryTransactions",
                 column: "OutboundId",
-                unique: true,
                 filter: "[OutboundId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
@@ -444,6 +457,9 @@ namespace BankingApplication_backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Documents");
+
+            migrationBuilder.DropTable(
+                name: "Downloads");
 
             migrationBuilder.DropTable(
                 name: "Employees");

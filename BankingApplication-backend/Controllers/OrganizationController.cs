@@ -31,68 +31,95 @@ namespace BankingApplication_backend.Controllers
             _cloudinary = cloudinary;
             _documentService = documentService;
         }
-        //[HttpPut("Organization/{id}/UpdateDocument")]
-        //public async Task<IActionResult> UpdateDocument(int id, IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //    {
-        //        return BadRequest("No file uploaded.");
-        //    }
+        [HttpPut("Organization/{id}/UpdateDocument")]
+        public async Task<IActionResult> UpdateDocument(int id, IFormFile file)
+        {
+            int orgId = _organizationService.UserIdToOrganisationId(id);
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
 
-        //    // Fetch the existing organization
-        //    var existingOrganisation = await _organizationService.GetOrganisationById(id);
-        //    if (existingOrganisation == null)
-        //    {
-        //        return NotFound("Organisation not found.");
-        //    }
+            // Fetch the existing organization
+            var existingOrganisation = await _organizationService.GetOrganisationById(orgId);
+            if (existingOrganisation == null)
+            {
+                return NotFound("Organisation not found.");
+            }
 
-        //    // Validate file type and size
-        //    var validExtensions = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".pdf" };
-        //    var extension = Path.GetExtension(file.FileName).ToLower();
+            // Validate file type and size
+            var validExtensions = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".pdf" };
+            var extension = Path.GetExtension(file.FileName).ToLower();
 
-        //    if (!validExtensions.Contains(extension))
-        //    {
-        //        return BadRequest("Invalid file extension.");
-        //    }
+            if (!validExtensions.Contains(extension))
+            {
+                return BadRequest("Invalid file extension.");
+            }
 
-        //    long size = file.Length;
-        //    if (size > (5 * 1024 * 1024))
-        //    {
-        //        return BadRequest("File size exceeds the 5MB limit.");
-        //    }
+            long size = file.Length;
+            if (size > (5 * 1024 * 1024))
+            {
+                return BadRequest("File size exceeds the 5MB limit.");
+            }
 
-        //    using (var stream = file.OpenReadStream())
-        //    {
-        //        var uploadParams = new ImageUploadParams()
-        //        {
-        //            File = new FileDescription(file.FileName, stream),
-        //            PublicId = $"organization/{existingOrganisation.OrganisationId}/{file.FileName}", // Specify folder structure
-        //            Overwrite = true // Optional: Overwrite if exists
-        //        };
+            using (var stream = file.OpenReadStream())
+            {
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    PublicId = $"organization/{existingOrganisation.OrganisationId}/{file.FileName}", // Specify folder structure
+                    Overwrite = true // Optional: Overwrite if exists
+                };
 
-        //        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-        //        if (uploadResult.StatusCode == HttpStatusCode.OK)
-        //        {
-        //            // Create or update document record
-        //            var document = new Document
-        //            {
-        //                FileName = file.FileName,
-        //                FilePath = uploadResult.SecureUrl.ToString(), // Use the secure URL from Cloudinary
-        //                FileType = file.ContentType,
-        //                OrganisationId = existingOrganisation.OrganisationId
-        //            };
+                if (uploadResult.StatusCode == HttpStatusCode.OK)
+                {
+                    // Create or update document record
+                    var document = new Document
+                    {
+                        FileName = file.FileName,
+                        FilePath = uploadResult.SecureUrl.ToString(), // Use the secure URL from Cloudinary
+                        FileType = file.ContentType,
+                        OrganisationId = existingOrganisation.OrganisationId
+                    };
 
-        //            await _documentService.UpdateOrAddDocumentAsync(document);
-        //        }
-        //        else
-        //        {
-        //            return StatusCode((int)uploadResult.StatusCode, "Error uploading file to Cloudinary.");
-        //        }
-        //    }
+                    await _documentService.UpdateOrAddDocumentAsync(document);
+                }
+                else
+                {
+                    return StatusCode((int)uploadResult.StatusCode, "Error uploading file to Cloudinary.");
+                }
+            }
 
-        //    return NoContent(); // 204 No Content
-        //}
+            return NoContent(); // 204 No Content
+        }
+
+        [HttpPut("Organization/{id}/UpdateBalance/{newBalance}")]
+        public async Task<IActionResult> UpdateBalance(int id, int newBalance)
+        {
+            int orgId = _organizationService.UserIdToOrganisationId(id);
+            if (newBalance <= 0)
+            {
+                return BadRequest("Invalid balance data.");
+            }
+
+            // Fetch the existing organization
+            var existingOrganisation = await _organizationService.GetOrganisationById(orgId);
+            if (existingOrganisation == null)
+            {
+                return NotFound("Organisation not found.");
+            }
+
+            // Update Account Balance
+            existingOrganisation.Account.AccountBalance+= newBalance;
+
+            // Save changes to the organization
+            await _organizationService.UpdateOrganisation(existingOrganisation);
+
+            return NoContent(); // 204 No Content
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrganization(int id)
         {

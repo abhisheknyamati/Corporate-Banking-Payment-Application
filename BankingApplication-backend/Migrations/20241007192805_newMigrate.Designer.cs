@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingApplication_backend.Migrations
 {
     [DbContext(typeof(BankingAppDbContext))]
-    [Migration("20241007075824_migrate2")]
-    partial class migrate2
+    [Migration("20241007192805_newMigrate")]
+    partial class newMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

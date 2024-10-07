@@ -80,14 +80,14 @@ namespace BankingApplication_backend.Controllers
 
             return Ok(new { Message = "Organisation rejected successfully." });
         }
-      
 
 
 
 
 
-        [HttpGet("CanExecuteTransaction")]
-        public async Task<int> CanExecuteTransaction(int orgId, decimal transactionAmount)
+
+        [HttpGet("CanExecuteTransaction/{orgId}/{transactionAmount}")]
+        public async Task<int> CanExecuteTransaction(int orgId, int transactionAmount)
         {
             var result = await _organisationService.CanExecuteTransaction(orgId, transactionAmount);
             if (!result)

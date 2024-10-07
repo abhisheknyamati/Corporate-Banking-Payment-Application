@@ -91,11 +91,13 @@ namespace BankingApplication_backend.Services
         {
             return await _orgRepo.GetEmployeeCountsByOrganizationAsync();
         }
-        public async Task<bool> CanExecuteTransaction(int orgId, decimal transactionAmount)
+
+        public async Task<bool> CanExecuteTransaction(int orgId, int transactionAmount)
         {
             var organisation = await _orgRepo.GetOrganisationWithAccountAsync(orgId);
             if (organisation == null || organisation.Account == null) { return false; }
-            return (organisation.Account.AccountBalance - transactionAmount) >= 100000;
+
+            return (organisation.Account.AccountBalance - transactionAmount) >= 0;
         }
 
         public Task AddBeneficiaryTransaction(BeneficiaryTransactionRequestDto requestDto)

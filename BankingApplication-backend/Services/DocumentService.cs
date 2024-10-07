@@ -10,6 +10,10 @@ namespace BankingApplication_backend.Services
         {
             _documentRepo = documentRepo;
         }
+        public async Task UpdateOrAddDocumentAsync(Document document)
+        {
+            await _documentRepo.UpdateOrAddDocumentAsync(document);
+        }
         public async Task AddDocumentAsync(Document document)
         {
             await _documentRepo.AddDocumentAsync(document); 

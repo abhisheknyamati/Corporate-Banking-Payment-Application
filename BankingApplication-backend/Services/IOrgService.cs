@@ -19,7 +19,7 @@ namespace BankingApplication_backend.Services
         Task UpdateOrganisation(Organisation organisation);
         int UserIdToOrganisationId(int userId);
         Task AddOutbound(Outbound outbound);
-        Task<bool> CanExecuteTransaction(int orgId, decimal transactionAmount);
+        Task<bool> CanExecuteTransaction(int orgId, int transactionAmount);
         Task AddBeneficiaryTransaction(BeneficiaryTransactionRequestDto requestDto);
         Task<List<Organisation>> GetOrganisationsByBankId(int bankId);
     }

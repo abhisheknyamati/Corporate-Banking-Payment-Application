@@ -11,7 +11,26 @@ namespace BankingApplication_backend.Repository
         {
             _context = context;
         }
+        public async Task UpdateOrAddDocumentAsync(Document document)
+        {
+            var existingDocument = await _context.Documents.FindAsync(document.OrganisationId);
 
+            if (existingDocument != null)
+            {
+                // Update existing document properties
+                existingDocument.FileName = document.FileName;
+                existingDocument.FilePath = document.FilePath;
+                existingDocument.FileType = document.FileType;
+                // Update other properties as necessary
+            }
+            else
+            {
+                // Add new document
+                await _context.Documents.AddAsync(document);
+            }
+
+            await _context.SaveChangesAsync();
+        }
         public async Task AddDocumentAsync(Document document)
         {
             await _context.Documents.AddAsync(document);
