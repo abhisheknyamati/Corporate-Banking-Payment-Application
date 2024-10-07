@@ -23,5 +23,16 @@ namespace BankingApplication_backend.Repository
             // Fetch employees with pagination
             var employees = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(); return employees;
         }
+
+        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        {
+            return await _context.Employees.FindAsync(id);
+        }
+
+        public async Task UpdateEmployeeAsync(Employee employee)
+        {
+            _context.Entry(employee).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

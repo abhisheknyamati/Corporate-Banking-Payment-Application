@@ -18,6 +18,9 @@ namespace BankingApplication_backend.Models
         [ForeignKey("Organisation")]
         public int AddedBy { get; set; }
         [ValidateNever]
+        [
+            JsonIgnore
+        ]
         public BeneficiaryTransaction BeneficiaryTransaction { get; set; }
     }
 }

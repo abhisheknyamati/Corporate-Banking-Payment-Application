@@ -12,7 +12,9 @@ namespace BankingApplication_backend.Models
         [ForeignKey("Organisation")]
         public int OrgID { get; set; }
         [ValidateNever]
-        [JsonIgnore]
+       // [
+       // JsonIgnore
+       // ]
         public virtual Organisation Organisation { get; set; }
         public int EmployeeIds { get; set; }
         public string Status { get; set; }

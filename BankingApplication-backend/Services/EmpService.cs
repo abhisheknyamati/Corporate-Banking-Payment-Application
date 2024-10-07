@@ -18,5 +18,15 @@ namespace BankingApplication_backend.Services
             var employees = await _empRepo.GetEmployeesByOrgId(orgId, searchTerm, pageNumber, pageSize);
             return employees;
         }
+
+        public async Task<bool> SoftDeleteEmployeeAsync(int id)
+        {
+            var employee = await _empRepo.GetEmployeeByIdAsync(id);
+            if (employee == null) return false;
+
+            employee.IsActive = false;
+            await _empRepo.UpdateEmployeeAsync(employee);
+            return true;
+        }
     }
 }

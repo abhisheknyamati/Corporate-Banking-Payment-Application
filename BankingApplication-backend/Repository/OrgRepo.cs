@@ -12,6 +12,52 @@ namespace BankingApplication_backend.Repository
         {
             _context = context;
         }
+        //new
+        public async Task<List<Outbound>> GetPendingOutboundOrganisationsAsync()
+        {
+            return await _context.OutboundOrgs
+                .Where(o => o.IsApproved == "pending") 
+                .ToListAsync();
+        }
+        public async Task<Outbound> GetOutboundByIdAsync(int outBoundId)
+        {
+            return await _context.OutboundOrgs.FindAsync(outBoundId);
+        }
+        public async Task<List<OrganizationEmployeeCount>> GetEmployeeCountsByOrganizationAsync()
+        {
+            return await _context.Employees
+                .GroupBy(emp => emp.Organisation.OrganisationName)
+                .Select(g => new OrganizationEmployeeCount
+                {
+                    OrganizationName = g.Key,
+                    EmployeeCount = g.Count()
+                })
+                .ToListAsync();
+        }
+        // Method to update an outbound organisation
+        public async Task UpdateOutboundAsync(Outbound outbound)
+        {
+            _context.OutboundOrgs.Update(outbound);
+            await _context.SaveChangesAsync();
+        }
+
+
+
+        public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
+        {
+            // Use Include if you want to load related data (like Organisation)
+            return await _context.Employees
+                .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+        }
+
+
+
+
+
+
+
+
+
         public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
         {
             var query = _context.EmpTransactions.AsQueryable();
@@ -133,6 +179,14 @@ namespace BankingApplication_backend.Repository
         {
             await _context.BeneficiaryTransactions.AddAsync(transaction);
             await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById)
+        {
+            var outboundsOrg = await _context.OutboundOrgs
+                .Where(o => o.AddedBy == addedById && o.IsApproved == "approved")
+                .ToListAsync();
+
+            return outboundsOrg;
         }
     }
 }

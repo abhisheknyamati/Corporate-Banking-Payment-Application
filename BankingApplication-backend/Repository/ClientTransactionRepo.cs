@@ -12,11 +12,23 @@ namespace BankingApplication_backend.Repository
         {
             _context = context;
         }
+        public async Task<List<TransactionStatusCount>> GetTransactionStatusCountsAsync()
+        {
+            return await _context.BeneficiaryTransactions
+                .GroupBy(t => t.IsApproved)
+                .Select(g => new TransactionStatusCount
+                {
+                    Status = g.Key,
+                    Count = g.Count()
+                }).ToListAsync();
+        }
+
+
 
         public async Task<IEnumerable<BeneficiaryTransaction>> GetPendingTransactions()
         {
             return await _context.BeneficiaryTransactions
-                .Where(t=>t.IsApproved=="pending") 
+                .Where(t=>t.IsApproved=="pending").Include(o=>o.Inbound).Include(o=>o.Outbound)
                 .ToListAsync();
         }
 
@@ -75,7 +87,7 @@ namespace BankingApplication_backend.Repository
         public async Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactions(int organizationId, string status)
         {
             return await _context.BeneficiaryTransactions
-                .Where(t => t.InitiatorOrgId == organizationId && t.IsApproved == status)
+                .Where(t => t.InitiatorOrgId == organizationId && t.IsApproved == status).Include(i=>i.Inbound).Include(o=>o.Outbound)
                 .ToListAsync();
         }
     }

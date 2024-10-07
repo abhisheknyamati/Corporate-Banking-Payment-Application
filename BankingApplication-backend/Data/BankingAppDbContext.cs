@@ -19,6 +19,7 @@ namespace BankingApplication_backend.Data
         public DbSet<BeneficiaryTransaction> BeneficiaryTransactions { get; set; }
         public DbSet<EmpTransaction> EmpTransactions { get; set; }
         public DbSet<SalaryRequest> salaryRequests { get; set; }
+        public DbSet<Download> Downloads { get; set; }
         public BankingAppDbContext(DbContextOptions<BankingAppDbContext> options) : base(options){}
     }
 }

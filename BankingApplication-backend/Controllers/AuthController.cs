@@ -13,11 +13,14 @@ namespace BankingApplication_backend.Controllers
         public AuthController(AuthService authService)
         {
             _authService = authService;
+            
         }
         [HttpPost]
         public async Task<string> Post([FromBody] CredDto value)
         {
             return await _authService.Login(value);
         }
+
+     
     }
 }

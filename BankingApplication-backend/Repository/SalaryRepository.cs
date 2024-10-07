@@ -17,7 +17,7 @@ namespace BankingApplication_backend.Repository
 
         public async Task<List<SalaryRequest>> GetSalaryRequestsAsync()
         {
-            return await _context.salaryRequests.ToListAsync();
+            return await _context.salaryRequests.Include(o=>o.Organisation).ToListAsync();
         }
 
         public async Task<SalaryRequest> GetSalaryRequestByIdAsync(int id)

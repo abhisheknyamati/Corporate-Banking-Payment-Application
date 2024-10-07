@@ -42,6 +42,8 @@ builder.Services.AddScoped<IEmpRepo, EmpRepo>();//
 builder.Services.AddScoped<IEmpService, EmpService>();//
 builder.Services.AddScoped<IClientTransactionRepo, ClientTransactionRepo>();//
 builder.Services.AddScoped<IClientTransactionService, ClientTransactionService>();//
+builder.Services.AddScoped<IDownloadRepo, DownloadRepo>();
+builder.Services.AddScoped<IDownloadService, DownloadService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -80,5 +82,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

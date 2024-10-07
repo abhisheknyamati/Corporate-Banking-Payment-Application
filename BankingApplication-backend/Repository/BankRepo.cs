@@ -11,6 +11,17 @@ namespace BankingApplication_backend.Repository
         {
             _context = context;
         }
+        public async Task<List<BankOrganizationCount>> GetOrganizationCountsByBankAsync()
+        {
+            return await _context.Organisations
+                .GroupBy(org => org.BankName)
+                .Select(g => new BankOrganizationCount
+                {
+                    BankName = g.Key,
+                    OrganizationCount = g.Count()
+                })
+                .ToListAsync();
+        }
 
         public async Task<Bank> AddBank(Bank bank)
         {

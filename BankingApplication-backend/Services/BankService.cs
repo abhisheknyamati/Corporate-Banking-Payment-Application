@@ -10,6 +10,10 @@ namespace BankingApplication_backend.Services
         {
             _bankRepo = bankRepo;
         }
+        public async Task<List<BankOrganizationCount>> GetOrganizationCountsByBankAsync()
+        {
+            return await _bankRepo.GetOrganizationCountsByBankAsync();
+        }
 
         public async Task<Bank> AddBank(Bank bank)
         {

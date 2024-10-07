@@ -4,6 +4,9 @@ namespace BankingApplication_backend.Services
 {
     public interface IClientTransactionService
     {
+        Task<List<TransactionStatusCount>> GetTransactionStatusCountsAsync();
+
+
         Task<IEnumerable<BeneficiaryTransaction>> GetPendingBeneficiaryTransactions();
 
         Task<IEnumerable<BeneficiaryTransaction>> GetApprovedBeneficiaryTransactions();

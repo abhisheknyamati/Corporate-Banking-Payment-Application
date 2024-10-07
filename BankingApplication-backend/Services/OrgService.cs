@@ -12,6 +12,43 @@ namespace BankingApplication_backend.Services
         {
             _orgRepo = orgRepo;
         }
+        //new add
+        public async Task<List<Outbound>> GetPendingOutboundOrganisationsAsync()
+        {
+            return await _orgRepo.GetPendingOutboundOrganisationsAsync();
+        }
+        public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
+        {
+            // Use Include if you want to load related data (like Organisation)
+            return await _orgRepo.GetEmployeeByIdAsync(employeeId); 
+        }
+        public async Task<bool> ApproveOutboundAsync(int outBoundId)
+        {
+            var outbound = await _orgRepo.GetOutboundByIdAsync(outBoundId);
+            if (outbound == null) return false;
+
+            outbound.IsApproved = "approved"; // Set approval status
+            await _orgRepo.UpdateOutboundAsync(outbound); // Save changes
+
+            return true;
+        }
+
+        // Method to reject an outbound organisation
+        public async Task<bool> RejectOutboundAsync(int outBoundId)
+        {
+            var outbound = await _orgRepo.GetOutboundByIdAsync(outBoundId);
+            if (outbound == null) return false;
+
+            outbound.IsApproved = "rejected"; // Set rejection status
+            await _orgRepo.UpdateOutboundAsync(outbound); // Save changes
+
+            return true;
+        }
+
+
+
+
+
         public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
         {
             return await _orgRepo.GetEmployeeTransactionsByOrgIdAsync(filter);
@@ -50,13 +87,17 @@ namespace BankingApplication_backend.Services
         {
             await _orgRepo.AddOutbound(outbound);
         }
-
+        public async Task<List<OrganizationEmployeeCount>> GetEmployeeCountsByOrganizationAsync()
+        {
+            return await _orgRepo.GetEmployeeCountsByOrganizationAsync();
+        }
         public async Task<bool> CanExecuteTransaction(int orgId, decimal transactionAmount)
         {
             var organisation = await _orgRepo.GetOrganisationWithAccountAsync(orgId);
             if (organisation == null || organisation.Account == null) { return false; }
             return (organisation.Account.AccountBalance - transactionAmount) >= 100000;
         }
+
         public Task AddBeneficiaryTransaction(BeneficiaryTransactionRequestDto requestDto)
         {
             int? inboundId = requestDto.InboundId == 0 ? (int?)null : requestDto.InboundId;
@@ -78,5 +119,9 @@ namespace BankingApplication_backend.Services
            return _orgRepo.AddBeneficiaryTransaction(transaction);
         }
 
+        public async Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById)
+        {
+            return await _orgRepo.GetActiveOutboundsByAddedBy(addedById);
+        }
     }
 }

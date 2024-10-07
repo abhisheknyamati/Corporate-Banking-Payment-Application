@@ -4,6 +4,7 @@ using BankingApplication_backend.Repository;
 using BankingApplication_backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,10 +24,11 @@ namespace BankingApplication_backend.Controllers
         private readonly ISalaryService _salaryService;
         private readonly IClientTransactionService _clientTransactionService;
         private readonly IInboundService _inboundService;
+        private readonly IDownloadService _downloadService;
 
         public AdminController(IAdminService adminService, IBankService bankService, IOrgService organisationService,
             IEmpTransactionService service, IMailService mailService, IEmpService empService, IEmpTransactionService empTransactionService,
-            ISalaryService salaryService, IClientTransactionService clientTransactionService,IInboundService inboundService)
+            ISalaryService salaryService, IClientTransactionService clientTransactionService,IInboundService inboundService, IDownloadService ownloadService)
         {
             _adminService = adminService;
             _bankService = bankService;
@@ -38,6 +40,61 @@ namespace BankingApplication_backend.Controllers
             _salaryService = salaryService;
             _clientTransactionService = clientTransactionService;
             _inboundService = inboundService;
+            _downloadService = ownloadService;
+        }
+        //new
+        [HttpGet("pending-outbounds")]
+        public async Task<IActionResult> GetPendingOutboundOrganisations()
+        {
+            List<Outbound> pendingOrganisations = await _organisationService.GetPendingOutboundOrganisationsAsync();
+
+            if (pendingOrganisations == null || pendingOrganisations.Count == 0)
+            {
+                return NotFound("No pending outbound organisations found.");
+            }
+
+            return Ok(pendingOrganisations);
+        }
+        [HttpPost("approve-outbound/{outBoundId}")]
+        public async Task<IActionResult> ApproveOutbound(int outBoundId)
+        {
+            bool result = await _organisationService.ApproveOutboundAsync(outBoundId);
+
+            if (!result)
+            {
+                return NotFound("Organisation not found.");
+            }
+
+            return Ok(new { Message = "Organisation approved successfully." });
+        }
+
+        [HttpPost("reject-outbound/{outBoundId}")]
+        public async Task<IActionResult> RejectOutbound(int outBoundId)
+        {
+            bool result = await _organisationService.RejectOutboundAsync(outBoundId);
+
+            if (!result)
+            {
+                return NotFound("Organisation not found.");
+            }
+
+            return Ok(new { Message = "Organisation rejected successfully." });
+        }
+      
+
+
+
+
+
+        [HttpGet("CanExecuteTransaction")]
+        public async Task<int> CanExecuteTransaction(int orgId, decimal transactionAmount)
+        {
+            var result = await _organisationService.CanExecuteTransaction(orgId, transactionAmount);
+            if (!result)
+            {
+                return 0;
+            }
+            return 1;
         }
 
         [HttpGet("pending-org")]
@@ -61,25 +118,48 @@ namespace BankingApplication_backend.Controllers
             return Ok(requests);
         }
 
-        [HttpPost("approve-salary-request/{id}")]
+        //added email here------------
+        [HttpPost("approve-salary-request/{id}")]             //emp id
         public async Task<IActionResult> ApproveSalaryRequest(int id)
         {
+            var emp = await _organisationService.GetEmployeeByIdAsync(id);
             var result = await _salaryService.ApproveSalaryRequestAsync(id);
             if (result.Contains("not found"))
             {
                 return NotFound(result);
             }
+            var emailSubject = $"Salary Request Status ";
+            var emailBody = $"The Salary request has been rejected by admin .\n\n";
+            var mailData = new MailData
+            {
+                EmailTo = emp.EmployeeEmail,
+                EmailSubject = emailSubject,
+                EmailBody = emailBody
+            };
+
+            _mailService.SendMail(mailData);
             return Ok(new { message = result });
         }
 
         [HttpPost("reject-salary-request/{id}")]
         public async Task<IActionResult> RejectSalaryRequest(int id)
         {
+            var emp = await _organisationService.GetEmployeeByIdAsync(id);
             var result = await _salaryService.RejectSalaryRequestAsync(id);
             if (result.Contains("not found"))
             {
                 return NotFound(result);
             }
+            var emailSubject = $"Salary Request Status ";
+            var emailBody = $"The Salary request has been rejected by admin .\n\n";
+            var mailData = new MailData
+            {
+                EmailTo = emp.EmployeeEmail,
+                EmailSubject = emailSubject,
+                EmailBody = emailBody
+            };
+
+            _mailService.SendMail(mailData);
             return Ok(new { message = result });
         }
         [HttpPut("approve-org/{id}")]
@@ -210,7 +290,7 @@ namespace BankingApplication_backend.Controllers
         public async Task<IActionResult> ApproveTransaction(int transactionId)
         {
             var result = await _clientTransactionService.ApproveBeneficiaryTransaction(transactionId);
-            if (result) return Ok("Transaction approved successfully.");
+            if (result) return Ok(result);
 
             return NotFound("Transaction not found or already processed.");
         }
@@ -220,7 +300,7 @@ namespace BankingApplication_backend.Controllers
         {
             var result = await _clientTransactionService.RejectBeneficiaryTransaction(transactionId);
             if (result)
-                return Ok("Transaction rejected successfully.");
+                return Ok(result);
 
             return NotFound("Transaction not found or already processed.");
         }
@@ -251,36 +331,89 @@ namespace BankingApplication_backend.Controllers
             return Ok(bank);
         }
 
-        //[HttpGet("full-report")]
-        //public async Task<IActionResult> GetFullReport()
-        //{
+        [HttpGet("get-report")]
+        public async Task<IActionResult> GetReport()
+        {
+            var transactionCounts = await _clientTransactionService.GetTransactionStatusCountsAsync();
+            var employeeTransactionCounts = await _empTransactionService.GetEmployeeTransactionStatusCountsAsync();
 
-        //    var totalOrganisations = await _organisationService.GetAllOrganisationsAsync();
-        //    var totalBeneficiaries = await _clientTransactionService.GetAllBeneficiariesAsync();
-        //    var totalEmployeeTransactions = await _empTransactionService.GetAllSalaryRequestsAsync();
-        //    var totalBeneficiaryTransactions = await GetAllBeneficiaryTransactionsAsync();
+            var organizationCountsByBank = await _bankService.GetOrganizationCountsByBankAsync();
+            var employeeCountsByOrganization = await _organisationService.GetEmployeeCountsByOrganizationAsync();
 
+            var report = new 
+            {
+                BeneficiaryTransactions = new
+                {
+                    Pending = transactionCounts.FirstOrDefault(x => x.Status == "Pending")?.Count ?? 0,
+                    Approved = transactionCounts.FirstOrDefault(x => x.Status == "Approved")?.Count ?? 0,
+                    Rejected = transactionCounts.FirstOrDefault(x => x.Status == "Rejected")?.Count ?? 0,
+                },
+                EmployeeTransactions = new
+                {
+                    Pending = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Pending")?.Count ?? 0,
+                    Approved = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Approved")?.Count ?? 0,
+                    Rejected = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Rejected")?.Count ?? 0,
+                },
+                OrganizationsByBank = organizationCountsByBank,
+                EmployeesByOrganization = employeeCountsByOrganization
+            };
 
-        //    var pieChartData = new
-        //    {
-        //        TotalOrganisations = totalOrganisations.Count,
-        //        TotalBeneficiaries = totalBeneficiaries.Count,
-        //        TotalEmployeeTransactions = totalEmployeeTransactions.Count,
-        //        TotalBeneficiaryTransactions = totalBeneficiaryTransactions.Count
-        //    };
+            return Ok(report);
+        }
+        [HttpGet("download-report")]
+        public async Task<IActionResult> DownloadReport()
+        {
+            // Call the existing GetReport method to get the report data
+            var reportDataResult = await GetReport() as OkObjectResult;
 
+            if (reportDataResult == null || reportDataResult.Value == null)
+            {
+                return NotFound();
+            }
 
-        //    var employeeCountByOrg = await GetEmployeeCountByOrganisationAsync();
-        //    var orgCountByBank = await GetOrganisationCountByBankAsync();
+            var reportData = reportDataResult.Value;
 
+            // Create CSV content from the report data
+            var csvContent = GenerateCsv(reportData);
 
-        //    var barChartData = new
-        //    {
-        //        EmployeeCountByOrg = employeeCountByOrg,
-        //        OrgCountByBank = orgCountByBank
-        //    };
+            // Return the CSV file
+            var fileName = "report.csv";
+            return File(Encoding.UTF8.GetBytes(csvContent), "text/csv", fileName);
+        }
 
-        //    return Ok(new { PieChartData = pieChartData, BarChartData = barChartData });
-        //}
+        private string GenerateCsv(object reportData)
+        {
+            var sb = new StringBuilder();
+
+            // Header
+            sb.AppendLine("Category,Pending,Approved,Rejected");
+
+            // Beneficiary Transactions
+            sb.AppendLine($"Beneficiary Transactions,{((dynamic)reportData).BeneficiaryTransactions.Pending},{((dynamic)reportData).BeneficiaryTransactions.Approved},{((dynamic)reportData).BeneficiaryTransactions.Rejected}");
+
+            // Employee Transactions
+            sb.AppendLine($"Employee Transactions,{((dynamic)reportData).EmployeeTransactions.Pending},{((dynamic)reportData).EmployeeTransactions.Approved},{((dynamic)reportData).EmployeeTransactions.Rejected}");
+
+            // Organizations by Bank
+            sb.AppendLine("\nOrganizations by Bank");
+            sb.AppendLine("Bank Name,Organization Count");
+
+            foreach (var org in ((dynamic)reportData).OrganizationsByBank)
+            {
+                sb.AppendLine($"{org.BankName},{org.OrganizationCount}");
+            }
+
+            // Employees by Organization
+            sb.AppendLine("\nEmployees by Organization");
+            sb.AppendLine("Organization Name,Employee Count");
+
+            foreach (var emp in ((dynamic)reportData).EmployeesByOrganization)
+            {
+                sb.AppendLine($"{emp.OrganizationName},{emp.EmployeeCount}");
+            }
+
+            return sb.ToString();
+        }
     }
 }
+

@@ -1,10 +1,13 @@
 ﻿using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using BankingApplication_backend.Services;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BankingApplication_backend.Controllers
 {
@@ -16,15 +19,80 @@ namespace BankingApplication_backend.Controllers
         private readonly IOrgService _organizationService;
         private readonly IEmpService _empService;
         private readonly IInboundService _inboundService;
+        private readonly Cloudinary _cloudinary;
+        private readonly IDocumentService _documentService;
 
-        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService, IInboundService inboundService)
+        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService, IInboundService inboundService, Cloudinary cloudinary, IDocumentService documentService)
         {
             _salaryService = salaryService;
             _organizationService = organizationService;
             _empService = empService;
             _inboundService = inboundService;
+            _cloudinary = cloudinary;
+            _documentService = documentService;
         }
+        //[HttpPut("Organization/{id}/UpdateDocument")]
+        //public async Task<IActionResult> UpdateDocument(int id, IFormFile file)
+        //{
+        //    if (file == null || file.Length == 0)
+        //    {
+        //        return BadRequest("No file uploaded.");
+        //    }
 
+        //    // Fetch the existing organization
+        //    var existingOrganisation = await _organizationService.GetOrganisationById(id);
+        //    if (existingOrganisation == null)
+        //    {
+        //        return NotFound("Organisation not found.");
+        //    }
+
+        //    // Validate file type and size
+        //    var validExtensions = new List<string> { ".jpeg", ".jpg", ".png", ".gif", ".pdf" };
+        //    var extension = Path.GetExtension(file.FileName).ToLower();
+
+        //    if (!validExtensions.Contains(extension))
+        //    {
+        //        return BadRequest("Invalid file extension.");
+        //    }
+
+        //    long size = file.Length;
+        //    if (size > (5 * 1024 * 1024))
+        //    {
+        //        return BadRequest("File size exceeds the 5MB limit.");
+        //    }
+
+        //    using (var stream = file.OpenReadStream())
+        //    {
+        //        var uploadParams = new ImageUploadParams()
+        //        {
+        //            File = new FileDescription(file.FileName, stream),
+        //            PublicId = $"organization/{existingOrganisation.OrganisationId}/{file.FileName}", // Specify folder structure
+        //            Overwrite = true // Optional: Overwrite if exists
+        //        };
+
+        //        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+        //        if (uploadResult.StatusCode == HttpStatusCode.OK)
+        //        {
+        //            // Create or update document record
+        //            var document = new Document
+        //            {
+        //                FileName = file.FileName,
+        //                FilePath = uploadResult.SecureUrl.ToString(), // Use the secure URL from Cloudinary
+        //                FileType = file.ContentType,
+        //                OrganisationId = existingOrganisation.OrganisationId
+        //            };
+
+        //            await _documentService.UpdateOrAddDocumentAsync(document);
+        //        }
+        //        else
+        //        {
+        //            return StatusCode((int)uploadResult.StatusCode, "Error uploading file to Cloudinary.");
+        //        }
+        //    }
+
+        //    return NoContent(); // 204 No Content
+        //}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrganization(int id)
         {
@@ -120,11 +188,7 @@ namespace BankingApplication_backend.Controllers
             return CreatedAtAction(nameof(GetOutboundsByAddedBy), new { addedById = outbound.AddedBy }, outbound);
         }
 
-        [HttpGet("CanExecuteTransaction")]
-        private async Task<bool> CanExecuteTransaction(int orgId, decimal transactionAmount)
-        {
-            return await _organizationService.CanExecuteTransaction(orgId, transactionAmount);
-        }
+     
 
         [HttpPost("beneficiary-transaction")]
         public async Task<IActionResult> CreateBeneficiaryTransaction([FromBody] BeneficiaryTransactionRequestDto requestDto)
@@ -159,5 +223,28 @@ namespace BankingApplication_backend.Controllers
             return Ok(transactions);
         }
 
+        [HttpGet("user/activeOutbounds/{addedById}")]
+        public async Task<IActionResult> GetActiveOutboundsByAddedBy(int addedById)
+        {
+            int orgId = _organizationService.UserIdToOrganisationId(addedById);
+            var outbounds = await _organizationService.GetActiveOutboundsByAddedBy(orgId); if (outbounds == null || !outbounds.Any())
+            {
+                return NotFound("No outbounds found for the given user.");
+            }
+            return Ok(outbounds);
+        }
+
+        [HttpDelete("softdelete/{id}")]
+        public async Task<IActionResult> SoftDeleteEmployee(int id)
+        {
+            var result = await _empService.SoftDeleteEmployeeAsync(id);
+
+            if (!result)
+            {
+                return NotFound(new { message = "Employee not found" });
+            }
+
+            return Ok(new { message = "Employee marked as inactive" });
+        }
     }
 }

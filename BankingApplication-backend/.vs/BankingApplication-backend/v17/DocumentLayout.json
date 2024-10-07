@@ -3,54 +3,124 @@
   "WorkspaceRootPath": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\authrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\authrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\maincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\maincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\dtos\\bankdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:dtos\\bankdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Admins.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\adminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\adminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\iadminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\iadminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Documents.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Organisations.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\organizationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\organizationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\iemprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\iemprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\emprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\emprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\iempservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\iempservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\empservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\empservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\iorgrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\iorgrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\orgrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\orgrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\iorgservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\iorgservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\orgservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\orgservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\adminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\adminrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\maincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\maincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\controllers\\bankcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:controllers\\bankcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\models\\organisation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:models\\organisation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.OutboundOrgs.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.InboundOrgs.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\models\\beneficiarytransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:models\\beneficiarytransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\dtos\\beneficiarytransactionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:dtos\\beneficiarytransactionrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\models\\reportresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:models\\reportresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\models\\transactionstatuscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:models\\transactionstatuscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Migrations\\20241007075824_migrate2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241007075824_migrate2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\downloadrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\downloadrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\repository\\idownloadrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:repository\\idownloadrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\idownloadservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\idownloadservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\services\\downloadservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:services\\downloadservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\data\\bankingappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:data\\bankingappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|c:\\users\\sanskruti.itkar\\desktop\\final banking app\\cleancode\\bankingapplication-backend\\models\\download.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB09A5D6-EB3E-41CF-8CF9-B3477371EAFA}|BankingApplication-backend.csproj|solutionrelative:models\\download.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Banks.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     }
   ],
   "DocumentGroupContainers": [
@@ -60,94 +130,397 @@
       "DocumentGroups": [
         {
           "DockedWidth": 240,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 28,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BankDto.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\DTOs\\BankDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\BankDto.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\DTOs\\BankDto.cs",
-              "RelativeToolTip": "DTOs\\BankDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T12:11:18.101Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "dbo.Admins [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Admins.sql",
-              "ToolTip": "dbo.Admins [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-10-06T12:09:27.472Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthRepo.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AuthRepo.cs",
-              "RelativeDocumentMoniker": "Repository\\AuthRepo.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AuthRepo.cs",
-              "RelativeToolTip": "Repository\\AuthRepo.cs",
-              "ViewState": "AQIAAD0AAAAAAAAAAAAYwEkAAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T12:04:21.42Z",
+              "WhenOpened": "2024-10-07T12:31:12.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\AuthService.cs",
-              "RelativeToolTip": "Services\\AuthService.cs",
-              "ViewState": "AQIAAFkAAAAAAAAAAAAIwGEAAAAJAAAA",
+              "Title": "IEmpRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IEmpRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\IEmpRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IEmpRepo.cs",
+              "RelativeToolTip": "Repository\\IEmpRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T12:06:03.085Z",
+              "WhenOpened": "2024-10-07T11:48:47.839Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IAdminRepo.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IAdminRepo.cs",
-              "RelativeDocumentMoniker": "Repository\\IAdminRepo.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IAdminRepo.cs",
-              "RelativeToolTip": "Repository\\IAdminRepo.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "DocumentIndex": 5,
+              "Title": "EmpRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\EmpRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\EmpRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\EmpRepo.cs",
+              "RelativeToolTip": "Repository\\EmpRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:56:52.252Z",
+              "WhenOpened": "2024-10-07T11:48:37.801Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "AdminRepo.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AdminRepo.cs",
-              "RelativeDocumentMoniker": "Repository\\AdminRepo.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AdminRepo.cs",
-              "RelativeToolTip": "Repository\\AdminRepo.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAACgAAABGAAAA",
+              "Title": "IEmpService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IEmpService.cs",
+              "RelativeDocumentMoniker": "Services\\IEmpService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IEmpService.cs",
+              "RelativeToolTip": "Services\\IEmpService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:56:40.822Z",
+              "WhenOpened": "2024-10-07T11:48:11.011Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "IAdminService.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IAdminService.cs",
-              "RelativeDocumentMoniker": "Services\\IAdminService.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IAdminService.cs",
-              "RelativeToolTip": "Services\\IAdminService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAtAAAA",
+              "Title": "EmpService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\EmpService.cs",
+              "RelativeDocumentMoniker": "Services\\EmpService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\EmpService.cs",
+              "RelativeToolTip": "Services\\EmpService.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAUwAcAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:56:09.393Z",
+              "WhenOpened": "2024-10-07T11:47:18.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IOrgRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IOrgRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\IOrgRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IOrgRepo.cs",
+              "RelativeToolTip": "Repository\\IOrgRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:44:29.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IOrgService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IOrgService.cs",
+              "RelativeDocumentMoniker": "Services\\IOrgService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IOrgService.cs",
+              "RelativeToolTip": "Services\\IOrgService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAcAAABPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:43:49.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AdminRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AdminRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\AdminRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\AdminRepo.cs",
+              "RelativeToolTip": "Repository\\AdminRepo.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:25:56.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OrganizationController.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\OrganizationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\OrganizationController.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\OrganizationController.cs",
+              "RelativeToolTip": "Controllers\\OrganizationController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAvwF4AAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:23:59.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BeneficiaryTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\BeneficiaryTransaction.cs",
+              "RelativeDocumentMoniker": "Models\\BeneficiaryTransaction.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\BeneficiaryTransaction.cs",
+              "RelativeToolTip": "Models\\BeneficiaryTransaction.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:09:16.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MainController.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\MainController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MainController.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\MainController.cs",
+              "RelativeToolTip": "Controllers\\MainController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:06:55.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "BeneficiaryTransactionRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\DTOs\\BeneficiaryTransactionRequestDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\BeneficiaryTransactionRequestDto.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\DTOs\\BeneficiaryTransactionRequestDto.cs",
+              "RelativeToolTip": "DTOs\\BeneficiaryTransactionRequestDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:05:50.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OrgService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\OrgService.cs",
+              "RelativeDocumentMoniker": "Services\\OrgService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\OrgService.cs",
+              "RelativeToolTip": "Services\\OrgService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:04:25.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "OrgRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\OrgRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\OrgRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\OrgRepo.cs",
+              "RelativeToolTip": "Repository\\OrgRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:04:10.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Organisation.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\Organisation.cs",
+              "RelativeDocumentMoniker": "Models\\Organisation.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\Organisation.cs",
+              "RelativeToolTip": "Models\\Organisation.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T10:52:18.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "dbo.OutboundOrgs [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.OutboundOrgs.sql",
+              "ToolTip": "dbo.OutboundOrgs [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-10-07T10:50:02.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "dbo.InboundOrgs [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.InboundOrgs.sql",
+              "ToolTip": "dbo.InboundOrgs [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-10-07T10:44:27.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "dbo.Organisations [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Organisations.sql",
+              "ToolTip": "dbo.Organisations [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-10-07T10:44:03.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "TransactionStatusCount.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\TransactionStatusCount.cs",
+              "RelativeDocumentMoniker": "Models\\TransactionStatusCount.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\TransactionStatusCount.cs",
+              "RelativeToolTip": "Models\\TransactionStatusCount.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T08:15:09.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ReportResponse.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\ReportResponse.cs",
+              "RelativeDocumentMoniker": "Models\\ReportResponse.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\ReportResponse.cs",
+              "RelativeToolTip": "Models\\ReportResponse.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T08:14:27.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20241007075824_migrate2.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Migrations\\20241007075824_migrate2.cs",
+              "RelativeDocumentMoniker": "Migrations\\20241007075824_migrate2.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Migrations\\20241007075824_migrate2.cs",
+              "RelativeToolTip": "Migrations\\20241007075824_migrate2.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:58:24.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "BankingAppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Data\\BankingAppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\BankingAppDbContext.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Data\\BankingAppDbContext.cs",
+              "RelativeToolTip": "Data\\BankingAppDbContext.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABUAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:54:24.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "DownloadService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\DownloadService.cs",
+              "RelativeDocumentMoniker": "Services\\DownloadService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\DownloadService.cs",
+              "RelativeToolTip": "Services\\DownloadService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:50:29.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "IDownloadService.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IDownloadService.cs",
+              "RelativeDocumentMoniker": "Services\\IDownloadService.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\IDownloadService.cs",
+              "RelativeToolTip": "Services\\IDownloadService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:50:19.667Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "DownloadRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\DownloadRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\DownloadRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\DownloadRepo.cs",
+              "RelativeToolTip": "Repository\\DownloadRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:48:46.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "IDownloadRepo.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IDownloadRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\IDownloadRepo.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Repository\\IDownloadRepo.cs",
+              "RelativeToolTip": "Repository\\IDownloadRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:48:40.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAMwCwAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:47:57.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Download.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\Download.cs",
+              "RelativeDocumentMoniker": "Models\\Download.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Models\\Download.cs",
+              "RelativeToolTip": "Models\\Download.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:47:27.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAAAFkAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:45:41.017Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "dbo.Banks [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Banks.sql",
+              "ToolTip": "dbo.Banks [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-10-07T07:26:54.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "BankController.cs",
+              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\BankController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BankController.cs",
+              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\BankController.cs",
+              "RelativeToolTip": "Controllers\\BankController.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAB4AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T07:23:31.952Z",
               "EditorCaption": ""
             },
             {
@@ -161,81 +534,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AdminService.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\AdminService.cs",
-              "RelativeDocumentMoniker": "Services\\AdminService.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Services\\AdminService.cs",
-              "RelativeToolTip": "Services\\AdminService.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAAACYAAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:55:58.86Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:54:20.258Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "dbo.Documents [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/DELL1580/FinalBankingDB/True/SqlTable/dbo.Documents.sql",
-              "ToolTip": "dbo.Documents [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-10-06T11:45:07.939Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-06T11:42:05.865Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAIwCUAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T11:28:55.376Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainController.cs",
-              "DocumentMoniker": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\MainController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MainController.cs",
-              "ToolTip": "C:\\Users\\sanskruti.itkar\\Desktop\\final banking app\\cleanCode\\BankingApplication-backend\\Controllers\\MainController.cs",
-              "RelativeToolTip": "Controllers\\MainController.cs",
-              "ViewState": "AQIAAOAAAAAAAAAAAAAAAOkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-06T10:02:36.524Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",

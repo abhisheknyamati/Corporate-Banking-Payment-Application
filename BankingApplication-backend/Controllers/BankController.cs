@@ -24,12 +24,12 @@ namespace BankingApplication_backend.Controllers
         }
 
 
-        [HttpGet("ViewBank/{id}")]
-        public async Task<IActionResult> ViewBank(int id)
+        [HttpGet("ViewBank/{userId}")]
+        public async Task<IActionResult> ViewBank(int userId)
         {
 
-
-            var bank = await _bankService.GetBankById(id);
+            int bankid = _bankService.userIdToBankId(userId);
+            var bank = await _bankService.GetBankById(bankid);
             if (bank == null)
             {
                 return NotFound();

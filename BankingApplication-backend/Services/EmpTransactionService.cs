@@ -11,6 +11,13 @@ namespace BankingApplication_backend.Services
             _transactionRepository = transactionRepository;
         }
 
+        public async Task<List<TransactionStatusCount>> GetEmployeeTransactionStatusCountsAsync()
+        {
+            return await _transactionRepository.GetEmployeeTransactionStatusCountsAsync();
+        }
+
+
+
         public async Task<IEnumerable<EmpTransaction>> GetEmployeeSalaryDisbursements(int organizationId, string status)
         {
             return await _transactionRepository.GetEmployeeSalaryDisbursements(organizationId, status);

@@ -5,6 +5,13 @@ namespace BankingApplication_backend.Services
 {
     public interface IOrgService
     {
+        Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById);
+        Task<List<OrganizationEmployeeCount>> GetEmployeeCountsByOrganizationAsync();
+        Task<bool> ApproveOutboundAsync(int outBoundId);
+        Task<bool> RejectOutboundAsync(int outBoundId);
+        Task<List<Outbound>> GetPendingOutboundOrganisationsAsync();
+        Task<Employee> GetEmployeeByIdAsync(int employeeId);
+
         Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter);
         Task<IEnumerable<Outbound>> GetOutboundsByAddedBy(int addedById);
         Task<Organisation> AddOrganisation(Organisation organisation);
