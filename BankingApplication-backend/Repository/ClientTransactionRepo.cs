@@ -90,5 +90,71 @@ namespace BankingApplication_backend.Repository
                 .Where(t => t.InitiatorOrgId == organizationId && t.IsApproved == status).Include(i=>i.Inbound).Include(o=>o.Outbound)
                 .ToListAsync();
         }
+
+        public async Task<int> GetTotalCountByOrgId(int orgId)
+        {
+            return await _context.BeneficiaryTransactions
+                .CountAsync(b => b.InitiatorOrgId == orgId);
+        }
+
+
+        public async Task<List<BeneficiaryTransaction>> GetTransactionsByOrgId(int orgId, string searchTerm, DateTime? startDate, DateTime? endDate, int pageNumber, int pageSize)
+        {
+            var query = _context.BeneficiaryTransactions.AsQueryable();
+
+            // Filter by OrgID
+            query = query.Where(t => t.InitiatorOrgId == orgId).Include(c => c.Inbound).Include(c => c.Outbound);
+
+            // Optionally filter by search term (if applicable)
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(t => t.IsApproved.Contains(searchTerm)).Include(c => c.Inbound).Include(c => c.Outbound); // Adjust as needed
+            }
+
+            // Filter by date range if provided
+            if (startDate.HasValue)
+            {
+                query = query.Where(t => t.BeneficiaryTransactionDate >= startDate.Value).Include(c => c.Inbound).Include(c => c.Outbound);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(t => t.BeneficiaryTransactionDate <= endDate.Value).Include(c => c.Inbound).Include(c => c.Outbound);
+            }
+
+            // Apply pagination
+            return await query.Skip((pageNumber - 1) * pageSize)
+                              .Take(pageSize)
+                              .ToListAsync();
+        }
+
+        public async Task<int> GetTotalCountByOrgId(int orgId, string searchTerm, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.BeneficiaryTransactions.AsQueryable();
+
+            // Filter by OrgID
+            query = query.Where(t => t.InitiatorOrgId == orgId).Include(c => c.Inbound).Include(c => c.Outbound);
+
+            // Optionally filter by search term (if applicable)
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(t => t.IsApproved.Contains(searchTerm)).Include(c => c.Inbound).Include(c => c.Outbound); // Adjust as needed
+            }
+
+            // Filter by date range if provided
+            if (startDate.HasValue)
+            {
+                query = query.Where(t => t.BeneficiaryTransactionDate >= startDate.Value).Include(c => c.Inbound).Include(c => c.Outbound);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(t => t.BeneficiaryTransactionDate <= endDate.Value).Include(c => c.Inbound).Include(c => c.Outbound);
+            }
+
+            // Return total count
+            return await query.CountAsync();
+        }
     }
 }
+

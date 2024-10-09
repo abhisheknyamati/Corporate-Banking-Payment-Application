@@ -11,7 +11,7 @@ namespace BankingApplication_backend.Repository
 
         public async Task<IEnumerable<Employee>> GetEmployeesByOrgId(int orgId, string searchTerm, int pageNumber, int pageSize)
         {
-            var query = _context.Employees.AsQueryable();
+            var query = _context.Employees.AsQueryable().Where(c => c.IsActive == true);
             // Filter by organization ID
             query = query.Where(e => e.OrganisationId == orgId);
             // Search functionality
@@ -34,5 +34,7 @@ namespace BankingApplication_backend.Repository
             _context.Entry(employee).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

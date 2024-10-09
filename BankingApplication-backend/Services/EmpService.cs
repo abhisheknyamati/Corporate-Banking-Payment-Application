@@ -9,9 +9,11 @@ namespace BankingApplication_backend.Services
     {
 
         private readonly IEmpRepo _empRepo;
-        public EmpService(IEmpRepo empRepo)
+        private readonly BankingAppDbContext _context;
+        public EmpService(IEmpRepo empRepo, BankingAppDbContext context)
         {
             _empRepo = empRepo;
+            _context = context;
         }
         public async Task<IEnumerable<Employee>> GetEmployeesByOrgId(int orgId, string searchTerm, int pageNumber, int pageSize)
         {
@@ -27,6 +29,23 @@ namespace BankingApplication_backend.Services
             employee.IsActive = false;
             await _empRepo.UpdateEmployeeAsync(employee);
             return true;
+        }
+
+        public async Task<int> GetTotalCountByOrgId(int orgId, string searchTerm)
+        {
+            var query = _context.Employees.AsQueryable();
+
+            // Filter by organization ID
+            query = query.Where(e => e.OrganisationId == orgId);
+
+            // Search functionality
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(e => e.EmployeeName.Contains(searchTerm));
+            }
+
+            // Get total count
+            return await query.CountAsync();
         }
     }
 }

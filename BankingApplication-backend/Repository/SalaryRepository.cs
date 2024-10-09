@@ -137,7 +137,7 @@ namespace BankingApplication_backend.Repository
                 _context.Employees.Add(newEmployee);
                 await _context.SaveChangesAsync();
 
-                return new CreatedAtActionResult("AddOrgEmployeeByUserId", "Salary", new { id = newEmployee.EmployeeId }, newEmployee);
+                return new StatusCodeResult(200);
             }
             catch (Exception ex)
             {

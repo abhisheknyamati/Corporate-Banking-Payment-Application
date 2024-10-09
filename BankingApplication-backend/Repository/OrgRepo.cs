@@ -2,6 +2,7 @@
 using BankingApplication_backend.DTOs;
 using BankingApplication_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
 
 namespace BankingApplication_backend.Repository
 {
@@ -50,13 +51,17 @@ namespace BankingApplication_backend.Repository
                 .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
         }
 
+        public async Task<Inbound> GetByIdAsync(int id)
+        {
+            return await _context.InboundOrgs.FindAsync(id);
+        }
 
-
-
-
-
-
-
+        public async Task<List<Inbound>> GetAllExceptAsync(int id)
+        {
+            return await _context.InboundOrgs
+                .Where(i => i.InboundId != id)
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
         {
@@ -68,12 +73,12 @@ namespace BankingApplication_backend.Repository
             // Filter by date range if provided
             if (filter.StartDate.HasValue)
             {
-                query = query.Where(e => e.EmployeeTransactionDate >= filter.StartDate.Value);
+                query = query.Where(e => e.EmployeeTransactionDate.Date >= filter.StartDate.Value.Date);
             }
 
             if (filter.EndDate.HasValue)
             {
-                query = query.Where(e => e.EmployeeTransactionDate <= filter.EndDate.Value);
+                query = query.Where(e => e.EmployeeTransactionDate.Date <= filter.EndDate.Value.Date);
             }
 
             // Apply pagination
@@ -188,5 +193,33 @@ namespace BankingApplication_backend.Repository
 
             return outboundsOrg;
         }
+
+
+        public async Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactionsByOrgIdAsync(BeneficiaryTransactionFilterDto filter)
+        {
+            var query = _context.BeneficiaryTransactions.AsQueryable();
+
+            // Filter by OrgId
+            query = query.Where(b => b.InitiatorOrgId == filter.OrgId);
+
+            if (filter.StartDate.HasValue)
+            {
+                query = query.Where(b => b.BeneficiaryTransactionDate.Date >= filter.StartDate.Value.Date);
+            }
+
+            if (filter.EndDate.HasValue)
+            {
+                query = query.Where(b => b.BeneficiaryTransactionDate.Date <= filter.EndDate.Value.Date);
+            }
+
+            // Apply pagination
+            return await query
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .ToListAsync();
+        }
+
+
+
     }
 }

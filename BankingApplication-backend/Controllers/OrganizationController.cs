@@ -21,8 +21,10 @@ namespace BankingApplication_backend.Controllers
         private readonly IInboundService _inboundService;
         private readonly Cloudinary _cloudinary;
         private readonly IDocumentService _documentService;
+        private readonly IEmpTransactionService _empTransactionService;
+        private readonly IClientTransactionService _clientTransactionService;
 
-        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService, IInboundService inboundService, Cloudinary cloudinary, IDocumentService documentService)
+        public OrganizationController(ISalaryService salaryService, IOrgService organizationService, IEmpService empService, IInboundService inboundService, Cloudinary cloudinary, IDocumentService documentService, IEmpTransactionService empTransactionService, IClientTransactionService clientTransactionService)
         {
             _salaryService = salaryService;
             _organizationService = organizationService;
@@ -30,6 +32,8 @@ namespace BankingApplication_backend.Controllers
             _inboundService = inboundService;
             _cloudinary = cloudinary;
             _documentService = documentService;
+            _empTransactionService = empTransactionService;
+            _clientTransactionService = clientTransactionService;
         }
         [HttpPut("Organization/{id}/UpdateDocument")]
         public async Task<IActionResult> UpdateDocument(int id, IFormFile file)
@@ -112,7 +116,7 @@ namespace BankingApplication_backend.Controllers
             }
 
             // Update Account Balance
-            existingOrganisation.Account.AccountBalance+= newBalance;
+            existingOrganisation.Account.AccountBalance += newBalance;
 
             // Save changes to the organization
             await _organizationService.UpdateOrganisation(existingOrganisation);
@@ -161,22 +165,7 @@ namespace BankingApplication_backend.Controllers
         }
 
 
-        [HttpGet("user/Oemp/{userId}")]
-        public async Task<IActionResult> GetOrganizationEmployeesByUserId(int userId, string searchTerm, int pageNumber = 1, int pageSize = 10)
-        {
-            var x = _organizationService.UserIdToOrganisationId(userId);
 
-            try
-            {
-                var employees = await _empService.GetEmployeesByOrgId(x, searchTerm, pageNumber, pageSize);
-                return Ok(employees);
-            }
-            catch (ArgumentException ex) { return BadRequest(ex.Message); }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An unexpected error occurred.");
-            }
-        }
 
         [HttpGet("user/outbounds/{addedById}")]
         public async Task<IActionResult> GetOutboundsByAddedBy(int addedById)
@@ -215,7 +204,7 @@ namespace BankingApplication_backend.Controllers
             return CreatedAtAction(nameof(GetOutboundsByAddedBy), new { addedById = outbound.AddedBy }, outbound);
         }
 
-     
+
 
         [HttpPost("beneficiary-transaction")]
         public async Task<IActionResult> CreateBeneficiaryTransaction([FromBody] BeneficiaryTransactionRequestDto requestDto)
@@ -237,18 +226,7 @@ namespace BankingApplication_backend.Controllers
             // Respond with a simple success message
             return Ok(new { message = "Request sent successfully." });
         }
-        [HttpGet("employee-transactions")]
-        public async Task<IActionResult> GetEmployeeTransactions([FromQuery] EmployeeTransactionFilterDto filter)
-        {
-            var transactions = await _organizationService.GetEmployeeTransactionsByOrgIdAsync(filter);
 
-            if (transactions == null || !transactions.Any())
-            {
-                return NotFound("No transactions found for the specified criteria.");
-            }
-
-            return Ok(transactions);
-        }
 
         [HttpGet("user/activeOutbounds/{addedById}")]
         public async Task<IActionResult> GetActiveOutboundsByAddedBy(int addedById)
@@ -273,5 +251,145 @@ namespace BankingApplication_backend.Controllers
 
             return Ok(new { message = "Employee marked as inactive" });
         }
+
+        [HttpGet("GetInboundCompaniesExcludingCurrent/{id}")]
+        public async Task<ActionResult<List<Inbound>>> GetInboundCompanies(int id)
+        {
+            var currentInbound = await _organizationService.GetInboundsExcludingCurrentAsync(id);
+            if (currentInbound == null || !currentInbound.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(currentInbound);
+        }
+
+        [HttpGet("GetInboundCompaniesExcludingCurrentByUserId/{id}")]
+        public async Task<ActionResult<List<Inbound>>> GetInboundCompaniesByUserId(int id)
+        {
+            var orgId = _organizationService.UserIdToOrganisationId(id);
+            var currentInbound = await _organizationService.GetInboundsExcludingCurrentAsync(orgId);
+            if (currentInbound == null || !currentInbound.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(currentInbound);
+        }
+
+
+        [HttpGet("user/Oemp/{userId}")]
+        public async Task<IActionResult> GetOrganizationEmployeesByUserId(int userId, string searchTerm = "", int pageNumber = 1, int pageSize = 10)
+        {
+            var orgId = _organizationService.UserIdToOrganisationId(userId);
+
+            try
+            {
+                var employees = await _empService.GetEmployeesByOrgId(orgId, searchTerm, pageNumber, pageSize);
+
+                // Get total count of employees
+                var totalCount = await _empService.GetTotalCountByOrgId(orgId, searchTerm);
+
+                // Return an anonymous object
+                return Ok(new
+                {
+                    values = employees,
+                    totalCount = totalCount
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+
+
+        [HttpGet("employee-transactions/{userId}")]
+        public async Task<IActionResult> GetEmpTransactionsByOrgId(int userId, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null, int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                var orgId = _organizationService.UserIdToOrganisationId(userId);
+
+                // Fetch transactions based on OrgId and date range
+                var transactions = await _empTransactionService.GetTransactionsByOrgId(orgId, searchTerm, startDate, endDate, pageNumber, pageSize);
+
+                // Get total count of transactions
+                var totalCount = await _empTransactionService.GetTotalCountByOrgId(orgId, searchTerm, startDate, endDate);
+
+                // Return an anonymous object with values and total count
+                return Ok(new
+                {
+                    values = transactions,
+                    totalCount = totalCount
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+
+
+        [HttpGet("beneficiary-transactions/{userId}")]
+        public async Task<IActionResult> GetBeneficiaryTransactionsByOrgId(int userId, string searchTerm = "", DateTime? startDate = null, DateTime? endDate = null, int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+
+                var orgId = _organizationService.UserIdToOrganisationId(userId);
+                // Fetch transactions based on OrgId and date range
+                var transactions = await _clientTransactionService.GetTransactionsByOrgId(orgId, searchTerm, startDate, endDate, pageNumber, pageSize);
+
+                // Get total count of transactions
+                var totalCount = await _clientTransactionService.GetTotalCountByOrgId(orgId, searchTerm, startDate, endDate);
+
+                // Return an anonymous object with values and total count
+                return Ok(new
+                {
+                    values = transactions,
+                    totalCount = totalCount
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+
+
+        [HttpPut("reapply/{userId}")]
+        public async Task<IActionResult> SetApprovalPending(int userId)
+        {
+            try
+            {
+                var organisationId = _organizationService.UserIdToOrganisationId(userId);
+
+                await _organizationService.SetOrganisationApprovalPendingAsync(organisationId);
+                return NoContent(); // 204 No Content
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message); // 404 Not Found
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); // 500 Internal Server Error
+            }
+        }
     }
+
 }
+

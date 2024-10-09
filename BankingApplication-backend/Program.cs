@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BankingAppDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("database")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("database2")));
 builder.Services.AddScoped<ISalaryService, SalaryService>();
 builder.Services.AddScoped<IInboundService, InboundService>();
 builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();

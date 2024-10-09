@@ -12,7 +12,11 @@ namespace BankingApplication_backend.Services
         {
             _orgRepo = orgRepo;
         }
-        //new add
+
+        public async Task<List<Inbound>> GetInboundsExcludingCurrentAsync(int id)
+        {
+            return await _orgRepo.GetAllExceptAsync(id);
+        }
         public async Task<List<Outbound>> GetPendingOutboundOrganisationsAsync()
         {
             return await _orgRepo.GetPendingOutboundOrganisationsAsync();
@@ -44,9 +48,6 @@ namespace BankingApplication_backend.Services
 
             return true;
         }
-
-
-
 
 
         public async Task<IEnumerable<EmpTransaction>> GetEmployeeTransactionsByOrgIdAsync(EmployeeTransactionFilterDto filter)
@@ -124,6 +125,24 @@ namespace BankingApplication_backend.Services
         public async Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById)
         {
             return await _orgRepo.GetActiveOutboundsByAddedBy(addedById);
+        }
+        public async Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactionsAsync(BeneficiaryTransactionFilterDto filter)
+        {
+            return await _orgRepo.GetBeneficiaryTransactionsByOrgIdAsync(filter);
+        }
+
+
+        public async Task SetOrganisationApprovalPendingAsync(int organisationId)
+        {
+            var organisation = await _orgRepo.GetOrganisationWithAccountAsync(organisationId);
+
+            if (organisation == null)
+            {
+                throw new KeyNotFoundException("Organisation not found");
+            }
+
+            organisation.IsApproved = "pending";
+            await _orgRepo.UpdateOrganisation(organisation);
         }
     }
 }

@@ -5,6 +5,9 @@ namespace BankingApplication_backend.Services
 {
     public interface IOrgService
     {
+        Task SetOrganisationApprovalPendingAsync(int organisationId);
+        Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactionsAsync(BeneficiaryTransactionFilterDto filter);
+        Task<List<Inbound>> GetInboundsExcludingCurrentAsync(int id);
         Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById);
         Task<List<OrganizationEmployeeCount>> GetEmployeeCountsByOrganizationAsync();
         Task<bool> ApproveOutboundAsync(int outBoundId);

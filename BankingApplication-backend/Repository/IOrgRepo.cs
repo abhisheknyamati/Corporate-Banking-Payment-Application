@@ -5,6 +5,9 @@ namespace BankingApplication_backend.Repository
 {
     public interface IOrgRepo
     {
+        Task<IEnumerable<BeneficiaryTransaction>> GetBeneficiaryTransactionsByOrgIdAsync(BeneficiaryTransactionFilterDto filter);
+        Task<Inbound> GetByIdAsync(int id);
+        Task<List<Inbound>> GetAllExceptAsync(int id);
         Task<IEnumerable<Outbound>> GetActiveOutboundsByAddedBy(int addedById);
         Task<List<OrganizationEmployeeCount>> GetEmployeeCountsByOrganizationAsync();
         Task UpdateOutboundAsync(Outbound outbound);

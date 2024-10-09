@@ -13,7 +13,7 @@ namespace BankingApplication_backend.Repository
         }
         public async Task UpdateOrAddDocumentAsync(Document document)
         {
-            var existingDocument = await _context.Documents.FindAsync(document.OrganisationId);
+            var existingDocument = await _context.Documents.Where(d => d.OrganisationId == document.OrganisationId).FirstOrDefaultAsync();
 
             if (existingDocument != null)
             {
