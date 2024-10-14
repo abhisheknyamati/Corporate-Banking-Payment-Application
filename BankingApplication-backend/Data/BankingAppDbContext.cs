@@ -13,13 +13,14 @@ namespace BankingApplication_backend.Data
         public DbSet<Creds> Credentials { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }//
+        public DbSet<User> Users { get; set; }//
         public DbSet<Document> Documents { get; set; }
         public DbSet<BeneficiaryTransaction> BeneficiaryTransactions { get; set; }
         public DbSet<EmpTransaction> EmpTransactions { get; set; }
         public DbSet<SalaryRequest> salaryRequests { get; set; }
         public DbSet<Download> Downloads { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
         public BankingAppDbContext(DbContextOptions<BankingAppDbContext> options) : base(options){}
     }
 }

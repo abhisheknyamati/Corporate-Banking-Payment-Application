@@ -52,13 +52,15 @@ namespace BankingApplication_backend.Controllers
                 return BadRequest("Invalid data.");
             }
 
+            var hashedPassword = PasswordHelper.HashPassword(organisationDto.OrganisationPassword);
+
             var organisation = new Organisation
             {
                 OrganisationName = organisationDto.OrganisationName,
                 OrganisationRegNumber = organisationDto.OrganisationRegNumber,
                 FounderName = organisationDto.FounderName,
                 OrganisationEmail = organisationDto.OrganisationEmail,
-                OrganisationPassword = organisationDto.OrganisationPassword,
+                OrganisationPassword = hashedPassword,
                 BankName = organisationDto.BankName,
                 Account = new Models.Account
                 {
@@ -129,12 +131,12 @@ namespace BankingApplication_backend.Controllers
             {
                 return BadRequest("Invalid data.");
             }
-
+            var hashedPassword = PasswordHelper.HashPassword(bankDto.BankPassword);
             var bank = new Bank
             {
                 BankEmail = bankDto.BankEmail,
                 BankName = bankDto.BankName,
-                BankPassword = bankDto.BankPassword
+                BankPassword = hashedPassword,
             };
 
             var createdBank = await _bankService.AddBank(bank);
@@ -238,5 +240,12 @@ namespace BankingApplication_backend.Controllers
             return Ok(new { exists });
         }
 
+
+        [HttpGet("getApprovedBanks")]
+        public async Task<IEnumerable<Bank>> GetApprovedBanks()
+        {
+            var banks = await _bankService.GetApprovedBanks();
+            return banks;
+        }
     }
 }

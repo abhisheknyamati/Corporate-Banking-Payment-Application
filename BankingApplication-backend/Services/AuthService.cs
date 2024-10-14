@@ -4,6 +4,7 @@ using BankingApplication_backend.Models;
 using BankingApplication_backend.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,9 +15,11 @@ namespace BankingApplication_backend.Services
     public class AuthService
     {
         private readonly AuthRepo _repo;
-        public AuthService(AuthRepo repo)
+        private readonly IMailService _mailService;
+        public AuthService(AuthRepo repo, IMailService mailService)
         {
             _repo = repo;
+            _mailService = mailService;
         }
 
         public async Task<string> Login(CredDto value)
@@ -53,6 +56,7 @@ namespace BankingApplication_backend.Services
             var token = GenerateToken(claims);
             return token;
         }
+
         private async Task<Claim[]> GenerateClaims(IUser user)
         {
             var role = await fetchRole(user);
@@ -97,7 +101,6 @@ namespace BankingApplication_backend.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
         private async Task<string> fetchRole(IUser user)
         {
             var role = await _repo.GetUserRole(user.UserId);
@@ -116,6 +119,74 @@ namespace BankingApplication_backend.Services
             return orgStatus;
         }
 
+        public async Task<string> GeneratePasswordResetToken(string email)
+        {
+            var user = await _repo.FindByEmail(email);
+            if (user == null)
+                throw new Exception("User not found");
+
+            var resetToken = new PasswordResetToken
+            {
+                UserId = user.UserId,
+                Token = Guid.NewGuid().ToString(), // Generate unique token
+                ExpiryDate = DateTime.UtcNow.AddHours(1) // Token expiration time
+            };
+
+            await _repo.AddPasswordResetToken(resetToken);
+
+            // Send email with reset token link (Email service should handle this)
+            var emailSubjet = $"Password Reset Request";
+            var resetLink = $"http://localhost:4200/login/reset-password?token={resetToken.Token}";
+            var emailBody = $"Click on the following link to reset your password: {resetLink}\n" +
+                $"This token is valid for ${resetToken.ExpiryDate.ToLocalTime()}";
+
+
+            MailData mailData = new MailData()
+            {
+                EmailTo = email,
+                EmailSubject = emailSubjet,
+                EmailBody = emailBody,
+            };
+
+            _mailService.SendMail(mailData);
+
+            return resetToken.Token;
+        }
+
+        public async Task<bool> ResetPassword(string token, string newPassword)
+        {         
+            PasswordResetToken resetToken = await _repo.FindByTokenAndUserId(token);
+            if (resetToken == null || resetToken.ExpiryDate < DateTime.UtcNow)
+                return false; 
+
+            var userCreds = await _repo.FindByUserId(resetToken.UserId);
+            
+            if (userCreds == null)
+                throw new Exception("User not found");
+            
+            userCreds.Password = newPassword;
+            await _repo.UpdateCredentials(userCreds);
+
+            var role = userCreds.User.Role.RoleName;
+
+            if(role == "org")
+            {
+                await _repo.UpdateOrgCred(userCreds.UserId, newPassword);   
+            }else if(role.ToString() == "bank")
+            {
+                await _repo.UpdateBankCred(userCreds.UserId, newPassword);
+            }
+
+            await _repo.RemoveToken(resetToken);
+
+            return true;
+        }
+
+        private string HashPassword(string password)
+        {
+            // Implement password hashing logic here
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
     }
 
 }

@@ -95,5 +95,9 @@ namespace BankingApplication_backend.Repository
         }
 
         //view org list method pending
+        public async Task<IEnumerable<Bank>> GetApprovedBanks()
+        {
+            return await _context.Banks.Where(b => b.IsApproved == "approved").ToListAsync();
+        }
     }
 }

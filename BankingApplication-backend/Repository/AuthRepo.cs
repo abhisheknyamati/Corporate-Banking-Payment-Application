@@ -17,21 +17,41 @@ namespace BankingApplication_backend.Repository
             _configuration = configuration;
         }
 
+        //public string GetRoleName(CredDto value)
+        //{
+        //    string roleName = (from cred in _context.Credentials
+        //                       join User in _context.Users on cred.UserId equals User.UserId
+        //                       join role in _context.Roles on User.RoleId equals role.RoleId
+        //                       where cred.Username == value.UserName && cred.Password == value.Password
+        //                       select role.RoleName).FirstOrDefault();
+
+        //    return roleName;
+        //}
+
         public string GetRoleName(CredDto value)
         {
-            string roleName = (from cred in _context.Credentials
-                               join User in _context.Users on cred.UserId equals User.UserId
-                               join role in _context.Roles on User.RoleId equals role.RoleId
-                               where cred.Username == value.UserName && cred.Password == value.Password
+            var credential = (from cred in _context.Credentials
+                              join User in _context.Users on cred.UserId equals User.UserId
+                              where cred.Username == value.UserName
+                              select new { cred.Password, User.RoleId }).FirstOrDefault();
+
+            if (credential == null || !PasswordHelper.VerifyPassword(value.Password, credential.Password))
+            {
+                return null; 
+            }
+
+            string roleName = (from role in _context.Roles
+                               where role.RoleId == credential.RoleId
                                select role.RoleName).FirstOrDefault();
 
             return roleName;
         }
 
+
         public async Task<Admin> ValidateAdmin(string username, string password)
         {
             var user = await _context.Admins.FirstOrDefaultAsync(u => u.AdminEmail == username);
-            if (user == null || user.AdminPassword != password)
+            if (user == null || !PasswordHelper.VerifyPassword(password, user.AdminPassword))
             {
                 return null;
             }
@@ -42,7 +62,7 @@ namespace BankingApplication_backend.Repository
         public async Task<Bank> ValidateBank(string username, string password)
         {
             var user = await _context.Banks.FirstOrDefaultAsync(u => u.BankEmail == username);
-            if (user == null || user.BankPassword != password)
+            if (user == null || !PasswordHelper.VerifyPassword(password, user.BankPassword))
             {
                 return null;
             }
@@ -53,7 +73,7 @@ namespace BankingApplication_backend.Repository
         public async Task<Organisation> ValidateOrganisation(string username, string password)
         {
             var user = await _context.Organisations.FirstOrDefaultAsync(u => u.OrganisationEmail == username);
-            if (user == null || user.OrganisationPassword != password)
+            if (user == null || !PasswordHelper.VerifyPassword(password, user.OrganisationPassword))
             {
                 return null;
             }
@@ -106,7 +126,73 @@ namespace BankingApplication_backend.Repository
             return organisation?.IsApproved;
         }
 
-    }
+        public async Task<Creds> FindByUserId(int userId)
+        {
+            var userCreds = await _context.Credentials
+                                          .Include(c => c.User)
+                                          .ThenInclude(u => u.Role) // Ensure Role is included
+                                          .FirstOrDefaultAsync(c => c.UserId == userId);
+            return userCreds;
+        }
 
- 
+
+        public async Task<Creds> FindByEmail(string email) // not needed while resetting password
+        {
+            var userCreds = _context.Credentials.Where(c => c.Username == email).FirstOrDefault();
+            return userCreds;
+        }
+
+        public async Task AddPasswordResetToken(PasswordResetToken resetToken)
+        {
+            _context.PasswordResetTokens.Add(resetToken);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<PasswordResetToken> FindByTokenAndUserId(string token)
+        {
+            return await _context.PasswordResetTokens
+                .FirstOrDefaultAsync(rt => rt.Token == token);
+        }
+
+        public async Task UpdateCredentials(Creds creds)
+        {
+            _context.Credentials.Update(creds);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveToken(PasswordResetToken resetToken)
+        {
+            _context.PasswordResetTokens.Remove(resetToken);
+            await _context.SaveChangesAsync();
+        }
+
+        //public async Task<string> GetRoleByUserId(int userId)
+        //{
+        //    var user = await _context.Users.FirstOrDefaultAsync(r => r.UserId == userId);
+        //    var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleId == user.RoleId);
+
+        //    return role.RoleName;
+        //}
+
+        public async Task UpdateOrgCred(int userId, string password)
+        {
+            Organisation organisation = await _context.Organisations.FirstOrDefaultAsync(r => r.UserId == userId);
+            if (organisation != null)
+            {
+                organisation.OrganisationPassword = password;
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
+        public async Task UpdateBankCred(int userId, string password)
+        {
+            Bank bank = await _context.Banks.FirstOrDefaultAsync(b => b.UserId == userId);
+            if (bank != null)
+            {
+                bank.BankPassword = password;
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
+    }
 }

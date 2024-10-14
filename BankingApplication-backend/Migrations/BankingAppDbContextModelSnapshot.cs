@@ -464,6 +464,31 @@ namespace BankingApplication_backend.Migrations
                     b.ToTable("OutboundOrgs");
                 });
 
+            modelBuilder.Entity("BankingApplication_backend.Models.PasswordResetToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetTokens");
+                });
+
             modelBuilder.Entity("BankingApplication_backend.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -647,6 +672,17 @@ namespace BankingApplication_backend.Migrations
                     b.Navigation("Account");
 
                     b.Navigation("Bank");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BankingApplication_backend.Models.PasswordResetToken", b =>
+                {
+                    b.HasOne("BankingApplication_backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

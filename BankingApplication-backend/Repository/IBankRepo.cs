@@ -6,7 +6,7 @@ namespace BankingApplication_backend.Repository
     {
         Task<List<BankOrganizationCount>> GetOrganizationCountsByBankAsync();
 
-
+        Task<IEnumerable<Bank>> GetApprovedBanks();
         Task<Bank> GetBankById(int id);
         Task<Bank> AddBank(Bank bank);
         Task<IEnumerable<Bank>> GetByApprovalStatus(string status);

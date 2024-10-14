@@ -34,6 +34,10 @@ namespace BankingApplication_backend.Services
             return _bankRepo.userIdToBankId(userId);
         }
 
+        public async Task<IEnumerable<Bank>> GetApprovedBanks()
+        {
+            return await _bankRepo.GetApprovedBanks();
+        }
 
     }
 }

@@ -11,11 +11,13 @@ namespace BankingApplication_backend.Repository
         public AdminRepo(BankingAppDbContext context) { _context = context; }
         public async Task<Admin> AddAdmin(AdminDto adminDto)
         {
+            var hashedPassword = PasswordHelper.HashPassword(adminDto.AdminPassword);
+
             var admin = new Admin
             {
                 AdminName = adminDto.AdminName,
                 AdminEmail = adminDto.AdminEmail,
-                AdminPassword = adminDto.AdminPassword,
+                AdminPassword = hashedPassword,
             }; 
 
             var roleId = 1;

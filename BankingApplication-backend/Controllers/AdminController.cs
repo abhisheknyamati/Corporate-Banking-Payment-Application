@@ -344,15 +344,14 @@ namespace BankingApplication_backend.Controllers
             {
                 BeneficiaryTransactions = new
                 {
-                    Pending = transactionCounts.FirstOrDefault(x => x.Status == "Pending")?.Count ?? 0,
-                    Approved = transactionCounts.FirstOrDefault(x => x.Status == "Approved")?.Count ?? 0,
-                    Rejected = transactionCounts.FirstOrDefault(x => x.Status == "Rejected")?.Count ?? 0,
+                    Pending = transactionCounts.FirstOrDefault(x => x.Status == "pending")?.Count ?? 0,
+                    Approved = transactionCounts.FirstOrDefault(x => x.Status == "approved")?.Count ?? 0,
+                    Rejected = transactionCounts.FirstOrDefault(x => x.Status == "rejected")?.Count ?? 0,
                 },
                 EmployeeTransactions = new
                 {
-                    Pending = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Pending")?.Count ?? 0,
-                    Approved = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Approved")?.Count ?? 0,
-                    Rejected = employeeTransactionCounts.FirstOrDefault(x => x.Status == "Rejected")?.Count ?? 0,
+                    Approved = employeeTransactionCounts.FirstOrDefault(x => x.Status == "approved")?.Count ?? 0,
+                    Rejected = employeeTransactionCounts.FirstOrDefault(x => x.Status == "rejected")?.Count ?? 0,
                 },
                 OrganizationsByBank = organizationCountsByBank,
                 EmployeesByOrganization = employeeCountsByOrganization
@@ -414,6 +413,257 @@ namespace BankingApplication_backend.Controllers
 
             return sb.ToString();
         }
+
+
+        [HttpPost("approve-outbound-array")]
+        public async Task<IActionResult> ApproveOutbounds([FromBody] int[] outBoundIds)
+        {
+            if (outBoundIds == null || outBoundIds.Length == 0)
+            {
+                return BadRequest("No outbound IDs provided.");
+            }
+
+            var approvedOutbounds = new List<int>();
+
+            foreach (var outBoundId in outBoundIds)
+            {
+                bool result = await _organisationService.ApproveOutboundAsync(outBoundId);
+                if (result)
+                {
+                    approvedOutbounds.Add(outBoundId);
+                }
+                else
+                {
+                    return NotFound($"Organisation with ID {outBoundId} not found.");
+                }
+            }
+
+            return Ok(new { Message = "Organisations approved successfully.", ApprovedIds = approvedOutbounds });
+        }
+
+        [HttpPost("reject-outbound-array")]
+        public async Task<IActionResult> RejectOutbounds([FromBody] int[] outBoundIds)
+        {
+            if (outBoundIds == null || outBoundIds.Length == 0)
+            {
+                return BadRequest("No outbound IDs provided.");
+            }
+
+            var rejectedOutbounds = new List<int>();
+
+            foreach (var outBoundId in outBoundIds)
+            {
+                bool result = await _organisationService.RejectOutboundAsync(outBoundId);
+                if (result)
+                {
+                    rejectedOutbounds.Add(outBoundId);
+                }
+                else
+                {
+                    return NotFound($"Organisation with ID {outBoundId} not found.");
+                }
+            }
+
+            return Ok(new { Message = "Organisations rejected successfully.", RejectedIds = rejectedOutbounds });
+        }
+
+        [HttpPut("reject-bank-array")]
+        public async Task<IActionResult> RejectBanks([FromBody] int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return BadRequest("No bank IDs provided.");
+            }
+
+            var rejectedBanks = new List<Bank>();
+            var emailDataList = new List<MailData>();
+
+            foreach (var id in ids)
+            {
+                // Retrieve the bank by ID
+                var bank = await _bankService.GetBankById(id);
+                if (bank == null)
+                {
+                    return NotFound($"Bank with ID {id} not found.");
+                }
+
+                // Update the bank status to rejected
+                bank.IsApproved = "rejected";
+                await _bankService.UpdateBank(bank);
+                rejectedBanks.Add(bank);
+
+                // Prepare email notification data
+                var emailSubject = $"Bank Request ";
+                var emailBody = $"The bank request has been {bank.IsApproved} for your bank {bank.BankName}.\n\n";
+
+                emailDataList.Add(new MailData
+                {
+                    EmailTo = bank.BankEmail,
+                    EmailSubject = emailSubject,
+                    EmailBody = emailBody
+                });
+            }
+
+            // Send all email notifications in bulk
+            foreach (var mailData in emailDataList)
+            {
+                _mailService.SendMail(mailData);
+            }
+
+            return NoContent(); // Return 204 No Content on success
+        }
+
+        [HttpPut("approve-bank-array")]
+        public async Task<IActionResult> ApproveBanks([FromBody] int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return BadRequest("No bank IDs provided.");
+            }
+
+            var approvedBanks = new List<Bank>();
+            var emailDataList = new List<MailData>();
+
+            foreach (var id in ids)
+            {
+                // Retrieve the bank by ID
+                var bank = await _bankService.GetBankById(id);
+                if (bank == null)
+                {
+                    return NotFound($"Bank with ID {id} not found.");
+                }
+
+                // Update the bank status to approved
+                bank.IsApproved = "approved";
+                await _bankService.UpdateBank(bank);
+                approvedBanks.Add(bank);
+
+                // Prepare email notification data
+                var emailSubject = $"Bank Request ";
+                var emailBody = $"The bank request has been {bank.IsApproved} for your bank {bank.BankName}.\n\n";
+
+                emailDataList.Add(new MailData
+                {
+                    EmailTo = bank.BankEmail,
+                    EmailSubject = emailSubject,
+                    EmailBody = emailBody
+                });
+            }
+
+            // Send all email notifications in bulk
+            foreach (var mailData in emailDataList)
+            {
+                _mailService.SendMail(mailData);
+            }
+
+            return NoContent(); // Return 204 No Content on success
+        }
+
+        [HttpPut("approve-org-array")]
+        public async Task<IActionResult> ApproveOrganisations([FromBody] int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return BadRequest("No organization IDs provided.");
+            }
+
+            var approvedOrganisations = new List<Organisation>();
+            var emailDataList = new List<MailData>();
+
+            foreach (var id in ids)
+            {
+                // Retrieve the organization by ID
+                var organisation = await _organisationService.GetOrganisationById(id);
+                if (organisation == null)
+                {
+                    return NotFound($"Organisation with ID {id} not found.");
+                }
+
+                // Update the organization status to approved
+                organisation.IsApproved = "approved";
+                await _organisationService.UpdateOrganisation(organisation);
+                approvedOrganisations.Add(organisation);
+
+                // Create a new Inbound object based on the approved organization
+                var inbound = new Inbound
+                {
+                    InboundName = organisation.OrganisationName,
+                    InboundFounderName = organisation.FounderName,
+                    InboundEmail = organisation.OrganisationEmail,
+                    IsApproved = "approved",
+                    AccountId = organisation.AccountId, // Assuming AccountId is set in the organization
+                    InboundBankId = organisation.BankId // Assuming BankId is part of the organization model
+                };
+
+                // Save the new inbound entity to the database
+                await _inboundService.AddInbound(inbound); // Ensure you have a method in your service to handle this
+
+                // Prepare email notification data
+                var emailSubject = $"Organisation Request Approved";
+                var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
+
+                emailDataList.Add(new MailData
+                {
+                    EmailTo = organisation.OrganisationEmail,
+                    EmailSubject = emailSubject,
+                    EmailBody = emailBody
+                });
+            }
+
+            // Send all email notifications in bulk
+            foreach (var mailData in emailDataList)
+            {
+                _mailService.SendMail(mailData);
+            }
+
+            return NoContent(); // Return 204 No Content on success
+        }
+        [HttpPut("reject-org-array")]
+        public async Task<IActionResult> RejectOrganisations([FromBody] int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return BadRequest("No organization IDs provided.");
+            }
+
+            var rejectedOrganisations = new List<Organisation>();
+            var emailDataList = new List<MailData>();
+
+            foreach (var id in ids)
+            {
+                // Retrieve the organization by ID
+                var organisation = await _organisationService.GetOrganisationById(id);
+                if (organisation == null)
+                {
+                    return NotFound($"Organisation with ID {id} not found.");
+                }
+
+                // Update the organization status to rejected
+                organisation.IsApproved = "rejected";
+                await _organisationService.UpdateOrganisation(organisation);
+                rejectedOrganisations.Add(organisation);
+
+                // Prepare email notification data
+                var emailSubject = $"Organisation Request ";
+                var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
+
+                emailDataList.Add(new MailData
+                {
+                    EmailTo = organisation.OrganisationEmail,
+                    EmailSubject = emailSubject,
+                    EmailBody = emailBody
+                });
+            }
+
+            // Send all email notifications in bulk
+            foreach (var mailData in emailDataList)
+            {
+                _mailService.SendMail(mailData);
+            }
+
+            return NoContent(); // Return 204 No Content on success
+        }
+
     }
 }
 

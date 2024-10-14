@@ -4,6 +4,7 @@ namespace BankingApplication_backend.Services
 {
     public interface IBankService
     {
+        Task<IEnumerable<Bank>> GetApprovedBanks();
         Task<List<BankOrganizationCount>> GetOrganizationCountsByBankAsync();
         Task<Bank> AddBank(Bank bank);
         Task UpdateBank(Bank bank);
