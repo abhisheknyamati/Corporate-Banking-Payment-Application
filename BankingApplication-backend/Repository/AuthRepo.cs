@@ -17,17 +17,6 @@ namespace BankingApplication_backend.Repository
             _configuration = configuration;
         }
 
-        //public string GetRoleName(CredDto value)
-        //{
-        //    string roleName = (from cred in _context.Credentials
-        //                       join User in _context.Users on cred.UserId equals User.UserId
-        //                       join role in _context.Roles on User.RoleId equals role.RoleId
-        //                       where cred.Username == value.UserName && cred.Password == value.Password
-        //                       select role.RoleName).FirstOrDefault();
-
-        //    return roleName;
-        //}
-
         public string GetRoleName(CredDto value)
         {
             var credential = (from cred in _context.Credentials

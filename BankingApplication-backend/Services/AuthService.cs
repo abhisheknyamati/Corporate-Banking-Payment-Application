@@ -77,12 +77,12 @@ namespace BankingApplication_backend.Services
 
             return new[]
             {
-            new Claim("UserID", user.UserId.ToString()),
-            new Claim("Name", user.Name),
-            new Claim("Email", user.Email),
-            new Claim("role", role),
-            new Claim("status", status),
-        };
+                new Claim("UserID", user.UserId.ToString()),
+                new Claim("Name", user.Name),
+                new Claim("Email", user.Email),
+                new Claim("role", role),
+                new Claim("status", status),
+            };
         }
 
         private string GenerateToken(Claim[] claims)
@@ -154,27 +154,29 @@ namespace BankingApplication_backend.Services
         }
 
         public async Task<bool> ResetPassword(string token, string newPassword)
-        {         
+        {
             PasswordResetToken resetToken = await _repo.FindByTokenAndUserId(token);
             if (resetToken == null || resetToken.ExpiryDate < DateTime.UtcNow)
-                return false; 
+                return false;
 
             var userCreds = await _repo.FindByUserId(resetToken.UserId);
-            
+
             if (userCreds == null)
                 throw new Exception("User not found");
-            
-            userCreds.Password = newPassword;
+
+            var hashedPassword = PasswordHelper.HashPassword(newPassword);
+            userCreds.Password = hashedPassword;
             await _repo.UpdateCredentials(userCreds);
 
             var role = userCreds.User.Role.RoleName;
 
-            if(role == "org")
+            if (role == "org")
             {
-                await _repo.UpdateOrgCred(userCreds.UserId, newPassword);   
-            }else if(role.ToString() == "bank")
+                await _repo.UpdateOrgCred(userCreds.UserId, hashedPassword);
+            }
+            else if (role.ToString() == "bank")
             {
-                await _repo.UpdateBankCred(userCreds.UserId, newPassword);
+                await _repo.UpdateBankCred(userCreds.UserId, hashedPassword);
             }
 
             await _repo.RemoveToken(resetToken);

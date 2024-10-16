@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankingApplication_backend.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "org")]
     [ApiController]
     public class OrganizationController : ControllerBase
     {

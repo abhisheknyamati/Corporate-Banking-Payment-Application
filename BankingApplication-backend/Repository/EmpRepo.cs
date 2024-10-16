@@ -21,7 +21,8 @@ namespace BankingApplication_backend.Repository
                 // Assuming Employee has a Name property
             }
             // Fetch employees with pagination
-            var employees = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(); return employees;
+            var employees = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(); 
+            return employees;
         }
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)

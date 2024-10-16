@@ -82,7 +82,8 @@ namespace BankingApplication_backend.Repository
                         IFSC = employee.IFSC,
                         Amount = employee.EmployeeSalary,
                         OrgID = org.OrganisationId,
-                        EmployeeId = empId
+                        EmployeeId = empId,
+                        EmployeeTransactionDate = DateTime.Now,
                     };
 
                     _context.EmpTransactions.Add(transaction);

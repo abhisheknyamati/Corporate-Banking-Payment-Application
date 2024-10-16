@@ -35,7 +35,6 @@ namespace BankingApplication_backend.Repository
                 })
                 .ToListAsync();
         }
-        // Method to update an outbound organisation
         public async Task UpdateOutboundAsync(Outbound outbound)
         {
             _context.OutboundOrgs.Update(outbound);
@@ -46,7 +45,6 @@ namespace BankingApplication_backend.Repository
 
         public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
         {
-            // Use Include if you want to load related data (like Organisation)
             return await _context.Employees
                 .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
         }
@@ -57,9 +55,10 @@ namespace BankingApplication_backend.Repository
         }
 
         public async Task<List<Inbound>> GetAllExceptAsync(int id)
-        {
+        {   
+            var organisation = await _context.Organisations.FirstOrDefaultAsync( o => o.OrganisationId == id);
             return await _context.InboundOrgs
-                .Where(i => i.InboundId != id)
+                .Where(i => i.InboundName != organisation.OrganisationName)
                 .ToListAsync();
         }
 
@@ -67,10 +66,8 @@ namespace BankingApplication_backend.Repository
         {
             var query = _context.EmpTransactions.AsQueryable();
 
-            // Filter by OrgId
             query = query.Where(e => e.OrgID == filter.OrgId);
 
-            // Filter by date range if provided
             if (filter.StartDate.HasValue)
             {
                 query = query.Where(e => e.EmployeeTransactionDate.Date >= filter.StartDate.Value.Date);
@@ -81,7 +78,6 @@ namespace BankingApplication_backend.Repository
                 query = query.Where(e => e.EmployeeTransactionDate.Date <= filter.EndDate.Value.Date);
             }
 
-            // Apply pagination
             return await query
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize)

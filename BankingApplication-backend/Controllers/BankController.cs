@@ -1,5 +1,6 @@
 ﻿using BankingApplication_backend.Models;
 using BankingApplication_backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BankingApplication_backend.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "bank")]
     [ApiController]
     public class BankController : ControllerBase
     {

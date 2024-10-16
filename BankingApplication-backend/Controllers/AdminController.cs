@@ -2,6 +2,7 @@
 using BankingApplication_backend.Models;
 using BankingApplication_backend.Repository;
 using BankingApplication_backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Text;
 namespace BankingApplication_backend.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -183,14 +185,14 @@ namespace BankingApplication_backend.Controllers
                 InboundFounderName = organisation.FounderName,
                 InboundEmail = organisation.OrganisationEmail,
                 IsApproved = "approved",
-                AccountId = organisation.AccountId, // Assuming AccountId is set in the organization
-                InboundBankId = organisation.BankId // Assuming BankId is part of the organization model
+                AccountId = organisation.AccountId, 
+                InboundBankId = organisation.BankId 
             };
 
-            // Save the new inbound entity to the database
-            await _inboundService.AddInbound(inbound); // Ensure you have a method in your service to handle this
+           
+            await _inboundService.AddInbound(inbound); 
 
-            // Prepare and send email notification
+            
             var emailSubject = $"Organisation Request Approved";
             var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
             var mailData = new MailData
@@ -202,7 +204,7 @@ namespace BankingApplication_backend.Controllers
 
             _mailService.SendMail(mailData);
 
-            return NoContent(); // Return 204 No Content on success
+            return NoContent(); 
         }
 
         [HttpPut("reject-org/{id}")]
@@ -362,7 +364,6 @@ namespace BankingApplication_backend.Controllers
         [HttpGet("download-report")]
         public async Task<IActionResult> DownloadReport()
         {
-            // Call the existing GetReport method to get the report data
             var reportDataResult = await GetReport() as OkObjectResult;
 
             if (reportDataResult == null || reportDataResult.Value == null)
@@ -504,13 +505,12 @@ namespace BankingApplication_backend.Controllers
                 });
             }
 
-            // Send all email notifications in bulk
             foreach (var mailData in emailDataList)
             {
                 _mailService.SendMail(mailData);
             }
 
-            return NoContent(); // Return 204 No Content on success
+            return NoContent(); 
         }
 
         [HttpPut("approve-bank-array")]
@@ -526,19 +526,16 @@ namespace BankingApplication_backend.Controllers
 
             foreach (var id in ids)
             {
-                // Retrieve the bank by ID
                 var bank = await _bankService.GetBankById(id);
                 if (bank == null)
                 {
                     return NotFound($"Bank with ID {id} not found.");
                 }
 
-                // Update the bank status to approved
                 bank.IsApproved = "approved";
                 await _bankService.UpdateBank(bank);
                 approvedBanks.Add(bank);
 
-                // Prepare email notification data
                 var emailSubject = $"Bank Request ";
                 var emailBody = $"The bank request has been {bank.IsApproved} for your bank {bank.BankName}.\n\n";
 
@@ -550,13 +547,12 @@ namespace BankingApplication_backend.Controllers
                 });
             }
 
-            // Send all email notifications in bulk
             foreach (var mailData in emailDataList)
             {
                 _mailService.SendMail(mailData);
             }
 
-            return NoContent(); // Return 204 No Content on success
+            return NoContent(); 
         }
 
         [HttpPut("approve-org-array")]
@@ -572,33 +568,28 @@ namespace BankingApplication_backend.Controllers
 
             foreach (var id in ids)
             {
-                // Retrieve the organization by ID
                 var organisation = await _organisationService.GetOrganisationById(id);
                 if (organisation == null)
                 {
                     return NotFound($"Organisation with ID {id} not found.");
                 }
 
-                // Update the organization status to approved
                 organisation.IsApproved = "approved";
                 await _organisationService.UpdateOrganisation(organisation);
                 approvedOrganisations.Add(organisation);
 
-                // Create a new Inbound object based on the approved organization
                 var inbound = new Inbound
                 {
                     InboundName = organisation.OrganisationName,
                     InboundFounderName = organisation.FounderName,
                     InboundEmail = organisation.OrganisationEmail,
                     IsApproved = "approved",
-                    AccountId = organisation.AccountId, // Assuming AccountId is set in the organization
-                    InboundBankId = organisation.BankId // Assuming BankId is part of the organization model
+                    AccountId = organisation.AccountId, 
+                    InboundBankId = organisation.BankId 
                 };
 
-                // Save the new inbound entity to the database
-                await _inboundService.AddInbound(inbound); // Ensure you have a method in your service to handle this
+                await _inboundService.AddInbound(inbound);
 
-                // Prepare email notification data
                 var emailSubject = $"Organisation Request Approved";
                 var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
 
@@ -610,13 +601,12 @@ namespace BankingApplication_backend.Controllers
                 });
             }
 
-            // Send all email notifications in bulk
             foreach (var mailData in emailDataList)
             {
                 _mailService.SendMail(mailData);
             }
 
-            return NoContent(); // Return 204 No Content on success
+            return NoContent(); 
         }
         [HttpPut("reject-org-array")]
         public async Task<IActionResult> RejectOrganisations([FromBody] int[] ids)
@@ -631,19 +621,16 @@ namespace BankingApplication_backend.Controllers
 
             foreach (var id in ids)
             {
-                // Retrieve the organization by ID
                 var organisation = await _organisationService.GetOrganisationById(id);
                 if (organisation == null)
                 {
                     return NotFound($"Organisation with ID {id} not found.");
                 }
 
-                // Update the organization status to rejected
                 organisation.IsApproved = "rejected";
                 await _organisationService.UpdateOrganisation(organisation);
                 rejectedOrganisations.Add(organisation);
 
-                // Prepare email notification data
                 var emailSubject = $"Organisation Request ";
                 var emailBody = $"The Organisation request has been {organisation.IsApproved} for your Organisation {organisation.OrganisationName}.\n\n";
 
@@ -655,13 +642,12 @@ namespace BankingApplication_backend.Controllers
                 });
             }
 
-            // Send all email notifications in bulk
             foreach (var mailData in emailDataList)
             {
                 _mailService.SendMail(mailData);
             }
 
-            return NoContent(); // Return 204 No Content on success
+            return NoContent();
         }
 
     }
